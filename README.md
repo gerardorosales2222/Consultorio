@@ -1,4 +1,4 @@
-#Consultorio Médico
+# Consultorio Médico
 
 Ejercicio integrador de habilidades de C++. Uso de Registros, Archivos y Pilas.
 
@@ -12,9 +12,9 @@ Desarrollaremos una aplicación que permita registrar las atenciones de personas
 > Se deben implementar todas las validaciones que se consideren necesarias (además de las enunciadas en este documento).
 
 
-#Implementación de Módulos
+# Implementación de Módulos
 
-##Módulo Consultorios:
+## Módulo Consultorios:
 
 Esta parte del proyecto estará dirigida a los diferentes profesionales de la salud que atienden y registran la Historia Clínica de sus pacientes en una base de datos. El sistema deberá contar con un listado de los pacientes que están registrados para ser atendidos en ese día, para visualizarla, el profesional deberá identificarse en el sistema por medio de su “Nombre de Usuario” y “Contraseña” y accediendo a la opción indicada. De esta manera el Profesional llamará por apellido y nombre al paciente que atenderá, una vez realizada esta tarea procede al ingreso de la historia clínica, en un texto de no más de 380 caracteres. Luego de realizada esta operación del sistema, el paciente debe desaparecer del listado de pendientes para ser atendidos.
 
@@ -23,19 +23,19 @@ Los datos del paciente que necesita un profesional de la salud en este proceso s
 La historia clínica  es común para todos los profesionales del centro médico, por lo tanto, se deberá visualizar fecha de atención de la misma y el nombre del profesional que lo atendió.
 
 
-##Módulo Recepción:
+## Módulo Recepción:
 
 Este módulo satisface las necesidades del personal que recibe al paciente. Desde aquí se realiza  ingreso de los pacientes (alta de un nuevo paciente), y la registración de los turnos (Esto solo lo realizan los recepcionistas).Esta aplicación debe permitir obtener un informe de los pacientes atendidos en determinada fecha por un determinado profesional de la salud.
  
 
-##Módulo Administración:
+## Módulo Administración:
 
 Esta área del centro médico es la encargada de realizar la generación de los nuevos profesionales de la salud que trabajan en el establecimiento, así como también de los empleados recepcionistas que realizan la registración de los turnos y pacientes. Deberá poder visualizar las atenciones realizadas por los profesionales de la salud según el mes en curso, en este punto se debe obtener un listado u informe que indique por profesional cuantas atenciones realizo en el mes actual.
 Para incentivar a los Profesionales, la administración otorga un bono mensual al que haya registrado la mayor cantidad de turnos en ese periodo, por lo tanto, una necesidad del sistema, es indicar cual es el profesional que debe recibir el bono.
 
 
 
-##I. INTERFAZ DE USUARIO
+## I. INTERFAZ DE USUARIO
 
 El diseño visual de la interfaz es libre y se pueden utilizar elementos gráficos (logos, colores) para hacer las pantallas de la aplicación más atractivas. Por ejemplo, utilizar símbolos o íconos para representar las especialidades de los profesionales, las pantallas de los informes, etc.  Opcionalmente, se le podrá dar un nombre y proponer un logo que represente a la aplicación y utilizarlo en las pantallas.
 Al ingresar a la aplicación, se presenta el Menú Principal, donde el usuario debe tener una cuenta creada para poder iniciar una sesión. A continuación, se muestra el esquema de opciones que debe respetar el menú principal:
@@ -54,12 +54,9 @@ Al ingresar a la aplicación, se presenta el Menú Principal, donde el usuario d
 
               4.- Cerrar la aplicación.
 
-
               Ingrese una opción: _
 
  
- 
-
  
 
               Modulo del recepcionista
@@ -75,19 +72,12 @@ Al ingresar a la aplicación, se presenta el Menú Principal, donde el usuario d
               4.- Listado de Atenciones por Profesional y Fecha
 
               5.- Cerrar la aplicación.
-
  
-
               Ingrese una opción: _
-
  
 
  
-
  
-
- 
-
               Módulo Administración
 
               =========================
@@ -102,15 +92,12 @@ Al ingresar a la aplicación, se presenta el Menú Principal, donde el usuario d
 
               6.- Cerrar la aplicación.
 
- 
-
               Ingrese una opción: _
 
- 
 
  
 
-##II. GESTIÓN Y AUTENTICACIÓN DE USUARIOS
+## II. GESTIÓN Y AUTENTICACIÓN DE USUARIOS
 
 Dentro del módulo administración, el usuario tendrá la posibilidad de crear un nuevo Profesional y la opción de crear un nuevo Recepcionista. Para esto el programa le solicitará las credenciales para validar y verificar el nombre de usuario y la contraseña.
 
@@ -146,26 +133,20 @@ Nota: Tanto en el nombre de usuario como en la contraseña deben distinguirse ma
 
  
 
-##III. ARCHIVOS
+## III. ARCHIVOS
 
 Para no perder la información entre ejecuciones, es necesario mantener los datos de las cuentas de usuario registradas.  Para cumplir con este objetivo deberá implementarse la persistencia de la información manejando archivos que se describirán más adelante en este apartado.  La estrategia sugerida para cumplir con este objetivo es:
-
- 
 
 Cuando se inicia la aplicación, se cargan los datos en estructuras de datos en memoria.
 Durante la ejecución de la aplicación se actualizan estas estructuras.
 Al terminar cada sesión se agrega el contenido de la misma al archivo correspondiente.
- 
 
-Los datos de las cuentas de usuario se almacenarán en los archivos Recepcionistas.dat y Profesionales.dat. Estos archivos serán de formato binario y guardarán variables diseñadas en una estructura de datos a fin de representar la información asociada a las cuentas de usuarios (es decir, nombre y contraseña). Cada vez que se inicie la aplicación, se utilizará la información almacenada en este archivo para validar el inicio de sesión y/o la creación de un nuevo usuario.
-
- 
+Los datos de las cuentas de usuario se almacenarán en los archivos Recepcionistas.dat y Profesionales.dat. Estos archivos serán de formato binario y guardarán variables diseñadas en una estructura de datos a fin de representar la información asociada a las cuentas de usuarios (es decir, nombre y contraseña). Cada vez que se inicie la aplicación, se utilizará la información almacenada en este archivo para validar el inicio de sesión y/o la creación de un nuevo usuario. 
 
 Cada vez que un usuario cree un registro de Pacientes el mismo se guardará dentro del archivo Pacientes.dat y los turnos correspondientes dentro del archivo Turnos.dat. Se sugiere utilizar el siguiente diseño tanto para los archivos mencionados, como para las estructuras en memoria que donde se registran los procesos descritos:
 
- 
 
-###Usuarios
+### Usuarios
 
 Usuario Char [10]
 
@@ -175,7 +156,7 @@ Apellido y Nombre Char [60]
 
  
 
-###Profesionales
+### Profesionales
 
 Apellido y Nombre Char [60]
 
@@ -187,7 +168,7 @@ Teléfono Char[25]
 
  
 
-###Pacientes                 
+### Pacientes                 
 
 Apellido y Nombre Char [60]
 
@@ -203,7 +184,7 @@ Teléfono Char[25]
 
  
 
-###Turnos
+### Turnos
 
 IdProfesional
 
@@ -222,7 +203,7 @@ Detalle de Atención Char[380]
 
  
 
-##III. ADICIONALES
+## III. ADICIONALES
 
 Deberá implementar las operaciones de Archivo Binario Alta, Baja (Lógica)  y Modificación utilizando:
 Una Estructura de datos dinámica del tipo PILA con el Archivo Usuarios.dat, como lista enlazada donde cada nodo contiene un registro y un puntero al siguiente nodo.
