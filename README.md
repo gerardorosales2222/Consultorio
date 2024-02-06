@@ -1,10 +1,14 @@
 # Consultorio Médico
 
-Ejercicio integrador de habilidades de C++. Uso de Registros, Archivos y Pilas.
+Ejercicio integrador de habilidades de C++
++ Registros
++ Archivos
++ Listas enlazadas
++ Pilas 
++ Árbol binario.
 
-Desarrollaremos una aplicación que permita registrar las atenciones de personas las cuales denominaremos pacientes, las cuales asisten a un centro médico el cual se encuentra estructurado en varios consultorios donde los profesionales de la salud de las  distintas especialidades prestan servicio de consulta y atención médica. Además, deberá contar también de un módulo para la gestión de turnos y otro para la administración.
+Desarrollaremos una aplicación que permita registrar las atenciones de personas las cuales denominaremos pacientes, las mismas asisten a un centro médico el cual se encuentra estructurado en varios consultorios donde los profesionales de la salud de las  distintas especialidades prestan servicio de consulta y atención médica. Además, deberá contar también de un módulo para la gestión de turnos y otro para la administración.
 
-> [!IMPORTANT]
 > Validaciones e interacciones
 >
 > La aplicación debe solicitar en todo momento el ingreso de información de forma clara y consistente.
@@ -16,7 +20,7 @@ Desarrollaremos una aplicación que permita registrar las atenciones de personas
 
 ## Módulo Consultorios:
 
-Esta parte del proyecto estará dirigida a los diferentes profesionales de la salud que atienden y registran la Historia Clínica de sus pacientes en una base de datos. El sistema deberá contar con un listado de los pacientes que están registrados para ser atendidos en ese día, para visualizarla, el profesional deberá identificarse en el sistema por medio de su “Nombre de Usuario” y “Contraseña” y accediendo a la opción indicada. De esta manera el Profesional llamará por apellido y nombre al paciente que atenderá, una vez realizada esta tarea procede al ingreso de la historia clínica, en un texto de no más de 380 caracteres. Luego de realizada esta operación del sistema, el paciente debe desaparecer del listado de pendientes para ser atendidos.
+Esta parte del proyecto estará dirigida a los diferentes profesionales de la salud que atienden y registran la Historia Clínica de sus pacientes de forma persistente. El sistema deberá contar con un listado de los pacientes que están registrados para ser atendidos en ese día, para visualizarla, el profesional deberá identificarse en el sistema por medio de su “Nombre de Usuario” y “Contraseña” y accediendo a la opción indicada. De esta manera el Profesional llamará por apellido y nombre al paciente que atenderá, una vez realizada esta tarea procede al ingreso de la historia clínica, en un texto de no más de 380 caracteres. Luego de realizada esta operación del sistema, el paciente debe desaparecer del listado de pendientes para ser atendidos.
 
 Los datos del paciente que necesita un profesional de la salud en este proceso son: Apellido y Nombres, DNI, Domicilio, Edad (calculada con la fecha de nacimiento registrada), Peso, Talla.
 
@@ -30,8 +34,8 @@ Este módulo satisface las necesidades del personal que recibe al paciente. Desd
 
 ## Módulo Administración:
 
-Esta área del centro médico es la encargada de realizar la generación de los nuevos profesionales de la salud que trabajan en el establecimiento, así como también de los empleados recepcionistas que realizan la registración de los turnos y pacientes. Deberá poder visualizar las atenciones realizadas por los profesionales de la salud según el mes en curso, en este punto se debe obtener un listado u informe que indique por profesional cuantas atenciones realizo en el mes actual.
-Para incentivar a los Profesionales, la administración otorga un bono mensual al que haya registrado la mayor cantidad de turnos en ese periodo, por lo tanto, una necesidad del sistema, es indicar cual es el profesional que debe recibir el bono.
+Esta área del centro médico es la encargada de realizar la generación de los nuevos profesionales de la salud que trabajan en el establecimiento, así como también de los empleados recepcionistas que realizan la registración de los turnos y pacientes. Deberá poder visualizar las atenciones realizadas por los profesionales de la salud según el mes en curso, en este punto se debe obtener un listado o informe que indique por profesional cuantas atenciones realizó en el mes actual.
+Para incentivar a los Profesionales, la administración otorga un bono mensual a quien haya registrado la mayor cantidad de turnos en ese periodo, por lo tanto, una necesidad del sistema, es indicar cual es el profesional que debe recibir el bono.
 
 
 
@@ -42,57 +46,57 @@ Al ingresar a la aplicación, se presenta el Menú Principal, donde el usuario d
 
 
 
-              Modulo Consultorios
+        Modulo Consultorios
 
-              =========================
+        =========================
 
-              1.- Iniciar Sesión
+        1.- Iniciar Sesión
 
-              2.- Visualizar Lista de Espera de Turnos (informe)
+        2.- Visualizar Lista de Espera de Turnos (informe)
 
-              3.- Registrar Historia Clínica
+        3.- Registrar Historia Clínica
 
-              4.- Cerrar la aplicación.
+        4.- Cerrar la aplicación.
 
-              Ingrese una opción: _
-
- 
- 
-
-              Modulo del recepcionista
-
-              =========================
-
-              1.- Iniciar Sesión
-
-              2.- Registrar Pacientes
-
-              3.- Registrar Turno
-
-              4.- Listado de Atenciones por Profesional y Fecha
-
-              5.- Cerrar la aplicación.
- 
-              Ingrese una opción: _
- 
+        Ingrese una opción: _
 
  
  
-              Módulo Administración
 
-              =========================
+        Modulo del recepcionista
 
-              1.- Registrar Profesionales
+        =========================
 
-              2.- Registrar Usuario Recepcionista
+        1.- Iniciar Sesión
 
-              3.- Atenciones por Profesional
+        2.- Registrar Pacientes
 
-              5.- Ranking de Profesionales por Atenciones
+        3.- Registrar Turno
 
-              6.- Cerrar la aplicación.
+        4.- Listado de Atenciones por Profesional y Fecha
 
-              Ingrese una opción: _
+        5.- Cerrar la aplicación.
+ 
+        Ingrese una opción: _
+ 
+
+ 
+ 
+        Módulo Administración
+
+        =========================
+
+        1.- Registrar Profesionales
+
+        2.- Registrar Usuario Recepcionista
+
+        3.- Atenciones por Profesional
+
+        5.- Ranking de Profesionales por Atenciones
+
+        6.- Cerrar la aplicación.
+
+        Ingrese una opción: _
 
 
  
@@ -104,10 +108,10 @@ Dentro del módulo administración, el usuario tendrá la posibilidad de crear u
 
 Nombre de usuario: Quedará definido por una cantidad mínima de 6 caracteres y máxima de 10, los cuales podrán ser letras, números y/o símbolos del conjunto {+,-,/,*,?,¿,!,¡}. Deberá cumplir con los siguientes requisitos:
 
-Ser único para cada usuario registrado.
-Comenzar con una letra minúscula.
-Tener al menos 2 letras mayúsculas.
-Tener como máximo 3 dígitos.
+- a)  Ser único para cada usuario registrado.
+- b) Comenzar con una letra minúscula.
+- c) Tener al menos 2 letras mayúsculas.
+- d) Tener como máximo 3 dígitos.
 
 Ejemplos de nombres de usuario incorrectos: AbC123 (no cumple con b), pTS!1234 (no cumple con d), g178Mci (no cumple con c), mARtin123gomez (tiene mas de 10 caracteres).
 
@@ -117,11 +121,11 @@ Ejemplos de nombres de usuario correctos: mARtin12, jo97!AR.
 
 Contraseña:  Su conformación no podrá darse al azar, sino que deberá respetar lo siguiente:
 
-Deberá contener al menos una letra mayúscula, una letra minúscula y un número.
-No podrá contener ningún carácter de puntuación, ni acentos, ni espacios. Sólo caracteres alfanuméricos.
-Deberá tener entre 6 y 32 caracteres.
-No debe tener más de 3 caracteres numéricos consecutivos.
-No debe tener 2 caracteres consecutivos que refieran a letras alfabéticamente consecutivas (ascendentemente). Este criterio es válido tanto para letras mayúsculas, minúsculas o combinación de ambas.
+- a) Deberá contener al menos una letra mayúscula, una letra minúscula y un número.
+- b) No podrá contener ningún carácter de puntuación, ni acentos, ni espacios. Sólo caracteres alfanuméricos.
+- c) Deberá tener entre 6 y 32 caracteres.
+- d) No debe tener más de 3 caracteres numéricos consecutivos.
+- e) No debe tener 2 caracteres consecutivos que refieran a letras alfabéticamente consecutivas (ascendentemente). Este criterio es válido tanto para letras mayúsculas, minúsculas o combinación de ambas.
 
 Ejemplos de contraseñas mal formadas: Ach32 (no cumple con c), dorit1234 (no cumple la regla a ni la d), sA;gotAP.10 (no cumple con b), aBuel123 (no cumple con e).
 
@@ -141,64 +145,58 @@ Cuando se inicia la aplicación, se cargan los datos en estructuras de datos en 
 Durante la ejecución de la aplicación se actualizan estas estructuras.
 Al terminar cada sesión se agrega el contenido de la misma al archivo correspondiente.
 
-Los datos de las cuentas de usuario se almacenarán en los archivos Recepcionistas.dat y Profesionales.dat. Estos archivos serán de formato binario y guardarán variables diseñadas en una estructura de datos a fin de representar la información asociada a las cuentas de usuarios (es decir, nombre y contraseña). Cada vez que se inicie la aplicación, se utilizará la información almacenada en este archivo para validar el inicio de sesión y/o la creación de un nuevo usuario. 
+Los datos de las cuentas de usuario se almacenarán en los archivos **Recepcionistas.dat** y **Profesionales.dat**. Estos archivos serán de formato binario y guardarán variables diseñadas en una estructura de datos a fin de representar la información asociada a las cuentas de usuarios (es decir, nombre y contraseña). Cada vez que se inicie la aplicación, se utilizará la información almacenada en este archivo para validar el inicio de sesión y/o la creación de un nuevo usuario. 
 
-Cada vez que un usuario cree un registro de Pacientes el mismo se guardará dentro del archivo Pacientes.dat y los turnos correspondientes dentro del archivo Turnos.dat. Se sugiere utilizar el siguiente diseño tanto para los archivos mencionados, como para las estructuras en memoria que donde se registran los procesos descritos:
+Cada vez que un usuario cree un registro de Pacientes el mismo se guardará dentro del archivo **Pacientes.dat** y los turnos correspondientes dentro del archivo **Turnos.dat**. Se sugiere utilizar el siguiente diseño tanto para los archivos mencionados, como para las estructuras en memoria que donde se registran los procesos descritos:
 
 
 ### Usuarios
 
-Usuario Char [10]
+Usuario (_char [10]_)
 
-Contraseña Char [10]
+Contraseña (_char [10]_)
 
-Apellido y Nombre Char [60]
+Apellido y Nombre (_char [60]_)
 
  
 
 ### Profesionales
 
-Apellido y Nombre Char [60]
+IdProfesional (_int_)
 
-IdProfesional Int
+Apellido y Nombre (_char [60]_)
 
-DNI Int
+DNI (_int_)
 
-Teléfono Char[25]
+Teléfono (_char [25]_)
 
  
 
 ### Pacientes                 
 
-Apellido y Nombre Char [60]
+Apellido y Nombre (_char [60]_)
 
-Domicilio Char [60]
+Domicilio (_char [60]_)
 
-DniPaciente int
+DniPaciente (_int_)
 
-Localidad Char [60]
+Localidad (_char [60]_)
 
-FechadeNacimiento Fecha
+FechadeNacimiento (_Fecha_)
 
-Teléfono Char[25]
+Teléfono (_char[25]_)
 
  
 
 ### Turnos
 
-IdProfesional
+IdProfesional (_int_)
 
-int
+Fecha (_Fecha_)
 
-Fecha
+DniPaciente (_int_)
 
-fecha
-
-DniPaciente
-
-int
-
-Detalle de Atención Char[380]
+Detalle de Atención (_char [380]_)
 
 
  
