@@ -47,6 +47,7 @@ main(){
 void registrarRecepcionista(FILE *archRec){
 	char user[10];
 	_flushall();
+	rec.baja=0;
 	do{
 		printf("Ingrese usuario: ");
 		gets(user);
