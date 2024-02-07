@@ -4,7 +4,8 @@
 #include "estructuras.h"
 
 Usuarios rec;
-void registrarRecepcionista();
+void registrarRecepcionista(FILE *archRec);
+bool verificarUsuario(char user[10]);
 
 FILE *archRec, *archPro;
 
@@ -19,8 +20,8 @@ main(){
         printf("1.- Registrar Profesionales \n");
         printf("2.- Registrar Usuario Recepcionista \n");
         printf("3.- Atenciones por Profesional \n");
-		printf("5.- Ranking de Profesionales por Atenciones \n");
-		printf("6.- Cerrar la aplicacion. \n");
+		printf("4.- Ranking de Profesionales por Atenciones \n");
+		printf("5.- Cerrar la aplicacion. \n");
     	printf("Ingrese una opcion: ");		
 		scanf("%d",&op);
 		switch(op){
@@ -31,24 +32,41 @@ main(){
 				break;
 			case 2:
 				system("CLS");
-				registrarRecepcionista();
+				registrarRecepcionista(archRec);
 				system("pause");
 				break;
-			case 0:
+			case 5:
+				printf("Saliendo...");
 				break;
 			default:
 				printf("Ingrese otra opcion...");
 		}
-	}while(op!=6);
+	}while(op!=5);
 }
 
-void registrarRecepcionista(){
-	printf("Ingrese usuario: ");
-	scanf("%s", &rec.Usuario);
+void registrarRecepcionista(FILE *archRec){
+	char user[10];
+	_flushall();
+	do{
+		printf("Ingrese usuario: ");
+		gets(user);
+	}while(verificarUsuario(user)==false);
+	strcpy(rec.Usuario,user);
 	printf("Ingrese Contrasenia: ");
-	scanf("%s", &rec.Contrasenia);
+	gets(rec.Contrasenia);
+	_flushall();
 	printf("Ingrese Apellido y Nombre: ");
-	scanf("%s", &rec.ApeNom);
-	fwrite(&rec,sizeof(rec),1,arch);
-	fclose(arch);
+	gets(rec.ApeNom);
+	_flushall();
+	fwrite(&rec,sizeof(rec),1,archRec);
+	fclose(archRec);
+}
+
+bool verificarUsuario(char user[10]){
+	if(strlen(user)>=6 && strlen(user)<=10){
+		return true;
+	}else{
+		printf("Debe tener de 6 a 10 letras.\n");
+		return false;
+	}
 }

@@ -8,5 +8,5 @@ typedef struct{
 	int IdProfesional;
 	char ApeNom[60];
 	char DNI[8];
-	char Teléfono[25];
+	char Telefono[25];
 }Profesionales;
