@@ -32,7 +32,9 @@ main(){
 				break;
 			case 2:
 				system("CLS");
+				archRec = fopen("recepcionistas.dat","ab");
 				registrarRecepcionista(archRec);
+				fclose(archRec);
 				system("pause");
 				break;
 			case 5:
@@ -60,7 +62,6 @@ void registrarRecepcionista(FILE *archRec){
 	gets(rec.ApeNom);
 	_flushall();
 	fwrite(&rec,sizeof(rec),1,archRec);
-	fclose(archRec);
 }
 
 bool verificarUsuario(char user[10]){
