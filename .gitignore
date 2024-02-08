@@ -1,3 +1,6 @@
 # Executables
 *.exe
 *.app
+
+#Files
+recepcionistas.dat
