@@ -93,11 +93,43 @@ void registrarRecepcionista(FILE *archRec){
 	fwrite(&rec,sizeof(rec),1,archRec);
 }
 
-bool verificarUsuario(char user[10]){
-	if(strlen(user)>=6 && strlen(user)<=10){
-		return true;
+bool verificarUsuario(char usuario[10]){
+	FILE *arch = fopen("recepcionistas.dat", "rb");
+	int may=0, digitos=0;
+	bool verificado;
+	if(strlen(usuario)>=6 && strlen(usuario)<=10){
+		verificado = true;
+		while (fread(&rec, sizeof(rec), 1, arch) == 1) {
+	        if(strcmp(usuario,rec.Usuario)==0){
+	        	verificado = false;
+	        	printf("Ya existe ese nombre de usuario \n");
+			}
+    	}
+    	for(int i=0;i<strlen(usuario);i++){
+			if(usuario[i]>='A' && usuario[i]<='Z'){
+				may++;
+			}
+			if(usuario[i]>='0' && usuario[i]<='9'){
+				digitos++;
+			}
+		}
+    	if(usuario[0]>='a'&&usuario[0]<='z'){
+				verificado = true;
+		}else{
+			verificado = false;
+			printf("Debe empezar con minusculas ");
+		}
+    	if(may<2){
+				printf("Debe tener al menos dos Mayusculas.\n");
+				verificado = false;
+			}
+		if(digitos>3){
+			printf("No puede tener mas de 3 digitos ");
+			verificado = false;
+		}
 	}else{
 		printf("Debe tener de 6 a 10 letras.\n");
-		return false;
+		verificado = false;
 	}
+	return verificado;
 }
