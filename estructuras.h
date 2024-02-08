@@ -1,6 +1,6 @@
 typedef struct{
 	char Usuario[10];
-	char Contrasenia[10];
+	char Contrasenia[40];
 	char ApeNom[60];
 	int baja;
 }Usuarios;
