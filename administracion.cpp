@@ -1,3 +1,7 @@
+/*
+Usuario: adminUTN
+Contraseña: admin
+*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -6,6 +10,7 @@
 Usuarios rec;
 void registrarRecepcionista(FILE *archRec);
 bool verificarUsuario(char user[10]);
+bool verificarContrasenia(char contrasenia[40]);
 bool autenticar();
 
 FILE *archRec, *archPro;
@@ -49,7 +54,6 @@ main(){
 	}else{
 		printf("Usuario o contrasenia incorrecto. ");
 	}
-	
 }
 
 bool autenticar(){
@@ -76,7 +80,7 @@ bool autenticar(){
 }
 
 void registrarRecepcionista(FILE *archRec){
-	char user[10];
+	char user[10],contrasenia[40];
 	_flushall();
 	rec.baja=0;
 	do{
@@ -84,8 +88,12 @@ void registrarRecepcionista(FILE *archRec){
 		gets(user);
 	}while(verificarUsuario(user)==false);
 	strcpy(rec.Usuario,user);
-	printf("Ingrese Contrasenia: ");
-	gets(rec.Contrasenia);
+	_flushall();
+	do{
+		printf("Ingrese Contrasenia: ");
+		gets(contrasenia);
+	}while(verificarContrasenia(contrasenia));
+	strcpy(rec.Contrasenia,contrasenia);
 	_flushall();
 	printf("Ingrese Apellido y Nombre: ");
 	gets(rec.ApeNom);
@@ -99,12 +107,6 @@ bool verificarUsuario(char usuario[10]){
 	bool verificado;
 	if(strlen(usuario)>=6 && strlen(usuario)<=10){
 		verificado = true;
-		while (fread(&rec, sizeof(rec), 1, arch) == 1) {
-	        if(strcmp(usuario,rec.Usuario)==0){
-	        	verificado = false;
-	        	printf("Ya existe ese nombre de usuario \n");
-			}
-    	}
     	for(int i=0;i<strlen(usuario);i++){
 			if(usuario[i]>='A' && usuario[i]<='Z'){
 				may++;
@@ -127,9 +129,60 @@ bool verificarUsuario(char usuario[10]){
 			printf("No puede tener mas de 3 digitos ");
 			verificado = false;
 		}
+		while (fread(&rec, sizeof(rec), 1, arch) == 1) {
+	        if(strcmp(usuario,rec.Usuario)==0){
+	        	verificado = false;
+	        	printf("Ya existe ese nombre de usuario \n");
+			}
+    	}
 	}else{
 		printf("Debe tener de 6 a 10 letras.\n");
 		verificado = false;
 	}
 	return verificado;
+}
+
+bool verificarContrasenia(char contrasenia[40]){
+	int min=0, may=0, num=0;
+	char anterior;
+	bool verificado = false;
+	int longitud = strlen(contrasenia);
+	if(longitud>=6 && longitud<=32){
+			for(int i=0;i<longitud;i++){
+				switch(contrasenia[i])
+				{
+					case 'a'...'z':
+						min++;
+						if(contrasenia[i] == anterior+1 || contrasenia[i] == anterior+33){
+							verificado = false;
+							printf("\nConsecutivos %c %c",anterior,contrasenia[i]);
+						}
+						break;
+					case 'A'...'Z':
+						may++;
+						verificado = false;
+						if(contrasenia[i] == anterior+1 || contrasenia[i] == anterior-31){
+							printf("\nConsecutivos %c %c",anterior,contrasenia[i]);
+						}
+						break;
+					case '0'...'9':
+						num++;
+						break;
+					default:
+						verificado = false;
+						printf("\nNo se acepta. Debe ser alfanumerico. ");
+				}
+				anterior = contrasenia[i];
+		}
+		if(num>0 && min>0 && may>0){
+			printf("\nContrasenia guardada.\n");
+			verificado = true;
+		}else{
+			printf("\nNo se guardo \n");
+			verificado = false;
+		}
+	}else{
+		printf("Debe tener entre 6 y 32 caracteres\n");
+		verificado = false;
+	}
 }
