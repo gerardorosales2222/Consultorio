@@ -5,6 +5,7 @@
 
 void recuperarUsuarios(FILE *archRec);
 void recuperarProfesionales(FILE *archPro);
+void listarTurnos(FILE *archPro);
 FILE *archRec, *archPro, *archPac, *archTur;
 
 bool autenticar();
@@ -52,7 +53,7 @@ int main() {
     		case 3:
     			if(sesion){
     				system("CLS");
-    				archPac = fopen("turnos.dat","wb");
+    				archTur = fopen("turnos.dat","wb");
     				registrarTurno(archTur);
     				fclose(archTur);
     			}else{
@@ -60,6 +61,12 @@ int main() {
     			}
     			system(" PAUSE");
     			break;
+    		case 4:
+    			archTur = fopen("turnos.dat","rb");
+    			listarTurnos(archTur);
+    			fclose(archTur);
+    			system("PAUSE");
+					break;
     	}
     }while(op!=5);
 
@@ -120,7 +127,7 @@ void registrarPaciente(FILE *archPac){
 	fwrite(&pac,sizeof(pac),1,archPac);	
 }
 
-void registrarTurno(FILE *archPac){
+void registrarTurno(FILE *archTur){
 	Turnos tur;
 	tur.baja = 0;
 	_flushall();
@@ -133,16 +140,28 @@ void registrarTurno(FILE *archPac){
 	scanf("%d",&tur.FechaAtencion.mes);
 	printf("->Anio: ");
 	scanf("%d",&tur.FechaAtencion.anio);
-	/*
-	Fecha FechaAtencion;
-	char DNI[8];
-	char DetalleAtencion[380];
-	int baja;
-	*/
-	
-	fwrite(&tur,sizeof(tur),1,archTur);	
+	_flushall();
+	printf("DNI Paciente: ");
+	gets(tur.DNI);
+	_flushall();
+	printf("Detalle atencion: ");
+	gets(tur.DetalleAtencion);
+	_flushall();
+	fwrite(&tur,sizeof(tur),1,archTur);
 }
 
+void listarTurnos(FILE *archPro){
+	Turnos tur;
+  if (archTur == NULL) {
+      printf("Error al abrir el archivo.\n");
+  }
+
+  while (fread(&tur, sizeof(tur), 1, archTur) == 1) {
+    printf("Profesional: %d\n", tur.IdProfesional);
+    printf("Fecha: %d/%d/%d\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
+  	printf("Detalle: %s\n", tur.DetalleAtencion);
+  }
+}
 
 void recuperarUsuarios(FILE *archRec){
 	Usuarios rec;
