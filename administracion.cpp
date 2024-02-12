@@ -8,11 +8,13 @@ Contraseña: admin
 #include "estructuras.h"
 
 Usuarios rec;
+Profesionales pro;
 void registrarRecepcionista(FILE *archRec);
 bool verificarUsuario(char user[10]);
 bool verificarContrasenia(char contrasenia[40]);
 bool autenticar();
 
+void registrarProfesional(FILE *archPro);
 FILE *archRec, *archPro;
 
 main(){
@@ -24,7 +26,7 @@ main(){
 			system("CLS");
 	        printf("Modulo Administracion \n");
 	        printf("========================= \n");
-	        printf("1.- Registrar Profesionales \n");
+	        printf("1.- Registrar Profesional \n");
 	        printf("2.- Registrar Usuario Recepcionista \n");
 	        printf("3.- Atenciones por Profesional \n");
 			printf("4.- Ranking de Profesionales por Atenciones \n");
@@ -34,7 +36,9 @@ main(){
 			switch(op){
 				case 1:
 					system("CLS");
-					printf("Activado opcion 1...\n");
+					archPro = fopen("profesionales.dat","ab");
+					registrarProfesional(archPro);
+					fclose(archPro);
 					system("pause");
 					break;
 				case 2:
@@ -79,6 +83,26 @@ bool autenticar(){
     fclose(arch);
 }
 
+
+void registrarProfesional(FILE *archPro){
+	Profesionales pro;
+	pro.baja=0;
+	_flushall();
+	printf("Ingrese Apellido y Nombre: ");
+	gets(pro.ApeNom);
+	_flushall();
+	printf("ID Profesional: ");
+	scanf("%d",&pro.IdProfesional);
+	_flushall();
+	printf("DNI: ");
+	gets(pro.DNI);
+	_flushall();
+	printf("Tel: ");
+	gets(pro.Telefono);
+	_flushall();
+	fwrite(&pro,sizeof(pro),1,archPro);
+}
+
 void registrarRecepcionista(FILE *archRec){
 	char user[10],contrasenia[40];
 	_flushall();
@@ -92,7 +116,7 @@ void registrarRecepcionista(FILE *archRec){
 	do{
 		printf("Ingrese Contrasenia: ");
 		gets(contrasenia);
-	}while(verificarContrasenia(contrasenia));
+	}while(verificarContrasenia(contrasenia)==false);
 	strcpy(rec.Contrasenia,contrasenia);
 	_flushall();
 	printf("Ingrese Apellido y Nombre: ");
@@ -129,7 +153,7 @@ bool verificarUsuario(char usuario[10]){
 			printf("No puede tener mas de 3 digitos ");
 			verificado = false;
 		}
-		while (fread(&rec, sizeof(rec), 1, arch) == 1) {
+		while(fread(&rec, sizeof(rec), 1, arch) == 1) {
 	        if(strcmp(usuario,rec.Usuario)==0){
 	        	verificado = false;
 	        	printf("Ya existe ese nombre de usuario \n");
@@ -185,4 +209,5 @@ bool verificarContrasenia(char contrasenia[40]){
 		printf("Debe tener entre 6 y 32 caracteres\n");
 		verificado = false;
 	}
+	return verificado;
 }
