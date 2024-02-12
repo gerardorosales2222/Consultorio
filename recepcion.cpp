@@ -3,8 +3,6 @@
 #include <string.h>
 #include "estructuras.h"
 
-void recuperarUsuarios(FILE *archRec);
-void recuperarProfesionales(FILE *archPro);
 void listarTurnos(FILE *archPro);
 FILE *archRec, *archPro, *archPac, *archTur;
 
@@ -62,17 +60,14 @@ int main() {
     			system(" PAUSE");
     			break;
     		case 4:
-    			archTur = fopen("turnos.dat","rb");
+    			system("CLS");
+					archTur = fopen("turnos.dat","rb");
     			listarTurnos(archTur);
     			fclose(archTur);
     			system("PAUSE");
 					break;
     	}
     }while(op!=5);
-
-    recuperarUsuarios(archRec);
-    printf("\n");
-	recuperarProfesionales(archPro);
     return 0;
 }
 
@@ -152,39 +147,27 @@ void registrarTurno(FILE *archTur){
 
 void listarTurnos(FILE *archPro){
 	Turnos tur;
-  if (archTur == NULL) {
+	int pro;
+	Fecha f;
+	if (archTur == NULL) {
       printf("Error al abrir el archivo.\n");
   }
-
+	printf("Ingrese ID del profesional: ");
+	scanf("%d",&pro);
+	printf("Ingrese Fecha de Atencion \n->Dia: ");
+	scanf("%d",&f.dia);	
+	printf("->Mes: ");
+	scanf("%d",&f.mes);
+	printf("->Anio: ");
+	scanf("%d",&f.anio);
   while (fread(&tur, sizeof(tur), 1, archTur) == 1) {
-    printf("Profesional: %d\n", tur.IdProfesional);
-    printf("Fecha: %d/%d/%d\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
-  	printf("Detalle: %s\n", tur.DetalleAtencion);
+  	if(tur.IdProfesional == pro 
+		&& tur.FechaAtencion.anio == f.anio
+		&& tur.FechaAtencion.mes == f.mes
+		&& tur.FechaAtencion.dia == f.dia){
+  		printf("Profesional: %d \n", tur.IdProfesional);
+    	printf("Fecha: %d/%d/%d\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
+  		printf("Detalle: %s\n\n\n", tur.DetalleAtencion);
+		}
   }
-}
-
-void recuperarUsuarios(FILE *archRec){
-	Usuarios rec;
-	archRec = fopen("recepcionistas.dat", "rb");
-    if (archRec == NULL) {
-        printf("Error al abrir el archivo.\n");
-    }
-
-    while (fread(&rec, sizeof(rec), 1, archRec) == 1) {
-        printf("User: %s\n", rec.Usuario);
-        printf("Name: %s\n", rec.ApeNom);
-        printf("Baja: %d\n", rec.baja);
-    }
-    fclose(archRec);
-}
-
-
-void recuperarProfesionales(FILE *archPro){
-	Profesionales pro;
-	archPro = fopen("profesionales.dat", "rb");
-	while(fread(&pro, sizeof(pro), 1, archPro) == 1){
-		printf("Medico: %s\n", pro.ApeNom);
-        printf("Tel: %s\n", pro.Telefono);
-	}
-	fclose(archPro);
 }
