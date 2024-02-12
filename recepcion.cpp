@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "estructuras.h"
 
 void recuperarUsuarios(FILE *archRec);
 void recuperarProfesionales(FILE *archPro);
 FILE *archRec, *archPro, *archPac, *archTur;
+
+bool autenticar();
 
 int main() {
 	int op;
@@ -24,12 +27,20 @@ int main() {
     	scanf("%d",&op);
     	switch(op){
     		case 1:
+    			system("CLS");
+    			if(autenticar()){
+    				sesion=true;
+    				printf("\nAutenticado \n");
+    			}else{
+    				printf("\nUsuario o contrasenia incorrecta \n");
+    			}
+    			system("PAUSE");
     			break;
     		case 2:
     			if(sesion){
     				printf("Registrar Paciente: ");
     			}else{
-    				printf("Primero debe iniciar sesion ");
+    				printf("Primero debe iniciar sesion \n");
     			}
     			system("PAUSE");
     			break;
@@ -40,6 +51,31 @@ int main() {
     printf("\n");
 	recuperarProfesionales(archPro);
     return 0;
+}
+
+bool autenticar(){
+	Usuarios rec;
+	FILE *arch = fopen("recepcionistas.dat", "rb");
+	char usuario[10], contrasenia[40];
+	bool coincidencia = false;
+    if (arch == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return 1;
+    }else{
+    	_flushall();
+    	printf("Usuario: ");
+    	gets(usuario);
+    	_flushall();
+    	printf("Contrasenia: ");
+    	gets(contrasenia);
+    	while (fread(&rec, sizeof(rec), 1, arch) == 1) {
+	        if(strcmp(usuario,rec.Usuario)==0&&strcmp(contrasenia,rec.Contrasenia)==0){
+	        	coincidencia = true;
+			}
+    	}
+    }
+    return coincidencia;
+    fclose(arch);
 }
 
 void recuperarUsuarios(FILE *archRec){
