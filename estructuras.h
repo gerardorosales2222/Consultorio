@@ -12,3 +12,24 @@ typedef struct{
 	char Telefono[25];
 	int baja;
 }Profesionales;
+
+typedef struct{
+	int dia;
+	int mes;
+	int anio;
+}Fecha;
+
+typedef struct{
+	char ApeNom[60];
+	char DNI[8];
+	char Localidad[60];
+	Fecha FechaDeNac;
+	char Telefono[10];
+}Pacientes;
+
+typedef struct{
+	int IdProfesional;
+	Fecha FechaAtencion;
+	char DNI[8];
+	char DetalleAtencion[380];
+}Turnos;
