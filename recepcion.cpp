@@ -8,6 +8,7 @@ void recuperarProfesionales(FILE *archPro);
 FILE *archRec, *archPro, *archPac, *archTur;
 
 bool autenticar();
+void registrarPaciente(FILE *archPac);
 
 int main() {
 	int op;
@@ -38,11 +39,14 @@ int main() {
     			break;
     		case 2:
     			if(sesion){
-    				printf("Registrar Paciente: ");
+    				system("CLS");
+    				archPac = fopen("pacientes.dat","wb");
+    				registrarPaciente(archPac);
+    				fclose(archPac);
     			}else{
-    				printf("Primero debe iniciar sesion \n");
+    				printf("\n	PRIMERO DEBE INICIAR SESION \n	");
     			}
-    			system("PAUSE");
+    			system(" PAUSE");
     			break;
     	}
     }while(op!=5);
@@ -76,6 +80,32 @@ bool autenticar(){
     }
     return coincidencia;
     fclose(arch);
+}
+
+void registrarPaciente(FILE *archPac){
+	Pacientes pac;
+	pac.baja = 0;
+	_flushall();
+	printf("Ingrese Apellido y Nombre: ");
+	gets(pac.ApeNom);
+	_flushall();
+	printf("DNI: ");
+	gets(pac.DNI);
+	_flushall();
+	printf("Localidad: ");
+	gets(pac.Localidad);
+	_flushall();
+	printf("Tel: ");
+	gets(pac.Telefono);
+	_flushall();
+	printf("Fecha de Nac \n->Dia: ");
+	scanf("%d",&pac.FechaDeNac.dia);	
+	printf("->Mes: ");
+	scanf("%d",&pac.FechaDeNac.mes);
+	printf("->Anio: ");
+	scanf("%d",&pac.FechaDeNac.anio);
+	_flushall();
+	fwrite(&pac,sizeof(pac),1,archPac);	
 }
 
 void recuperarUsuarios(FILE *archRec){

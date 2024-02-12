@@ -25,6 +25,7 @@ typedef struct{
 	char Localidad[60];
 	Fecha FechaDeNac;
 	char Telefono[10];
+	int baja;
 }Pacientes;
 
 typedef struct{
@@ -32,4 +33,5 @@ typedef struct{
 	Fecha FechaAtencion;
 	char DNI[8];
 	char DetalleAtencion[380];
+	int baja;
 }Turnos;
