@@ -9,6 +9,7 @@ FILE *archRec, *archPro, *archPac, *archTur;
 
 bool autenticar();
 void registrarPaciente(FILE *archPac);
+void registrarTurno(FILE *archPac);
 
 int main() {
 	int op;
@@ -43,6 +44,17 @@ int main() {
     				archPac = fopen("pacientes.dat","wb");
     				registrarPaciente(archPac);
     				fclose(archPac);
+    			}else{
+    				printf("\n	PRIMERO DEBE INICIAR SESION \n	");
+    			}
+    			system(" PAUSE");
+    			break;
+    		case 3:
+    			if(sesion){
+    				system("CLS");
+    				archPac = fopen("turnos.dat","wb");
+    				registrarTurno(archTur);
+    				fclose(archTur);
     			}else{
     				printf("\n	PRIMERO DEBE INICIAR SESION \n	");
     			}
@@ -107,6 +119,30 @@ void registrarPaciente(FILE *archPac){
 	_flushall();
 	fwrite(&pac,sizeof(pac),1,archPac);	
 }
+
+void registrarTurno(FILE *archPac){
+	Turnos tur;
+	tur.baja = 0;
+	_flushall();
+	printf("ID Medico: ");
+	scanf("%d",&tur.IdProfesional);
+	_flushall();
+	printf("Fecha Atencion \n->Dia: ");
+	scanf("%d",&tur.FechaAtencion.dia);	
+	printf("->Mes: ");
+	scanf("%d",&tur.FechaAtencion.mes);
+	printf("->Anio: ");
+	scanf("%d",&tur.FechaAtencion.anio);
+	/*
+	Fecha FechaAtencion;
+	char DNI[8];
+	char DetalleAtencion[380];
+	int baja;
+	*/
+	
+	fwrite(&tur,sizeof(tur),1,archTur);	
+}
+
 
 void recuperarUsuarios(FILE *archRec){
 	Usuarios rec;
