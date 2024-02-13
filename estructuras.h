@@ -1,3 +1,5 @@
+//Estructuras usadas en todos lo módulos de la aplicación
+
 typedef struct{
 	char Usuario[10];
 	char Contrasenia[40];
