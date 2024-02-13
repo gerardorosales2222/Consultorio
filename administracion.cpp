@@ -15,9 +15,12 @@ bool verificarContrasenia(char contrasenia[40]);
 bool autenticar();
 
 void registrarProfesional(FILE *archPro);
-FILE *archRec, *archPro;
+void listarTurnos(FILE *archPro);
+void ranking(FILE *archPro);
+FILE *archRec, *archPro, *archTur;
 
 main(){
+	system("TITLE ADMINISTRACION");
 	int op;
 	archRec = fopen("recepcionistas.dat","ab");
 	archPro = fopen("profesionales.dat","ab");
@@ -46,6 +49,20 @@ main(){
 					archRec = fopen("recepcionistas.dat","ab");
 					registrarRecepcionista(archRec);
 					fclose(archRec);
+					system("pause");
+					break;
+				case 3:
+					system("CLS");
+					archTur = fopen("turnos.dat","rb");
+					listarTurnos(archTur);
+					fclose(archTur);
+					system("pause");
+					break;
+				case 4:
+					system("CLS");
+					archTur = fopen("turnos.dat","rb");
+					ranking(archTur);
+					fclose(archTur);
 					system("pause");
 					break;
 				case 5:
@@ -210,4 +227,56 @@ bool verificarContrasenia(char contrasenia[40]){
 		verificado = false;
 	}
 	return verificado;
+}
+
+void listarTurnos(FILE *archTur){
+	Turnos tur;
+	int pro;
+	if (archTur == NULL) {
+      printf("Error al abrir el archivo.\n");
+  	}
+	printf("Ingrese ID del profesional: ");
+	scanf("%d",&pro);
+	while (fread(&tur, sizeof(tur), 1, archTur) == 1){
+		if(tur.IdProfesional == pro)
+		{
+		  	printf("\nProfesional: %d \n", tur.IdProfesional);
+	    	printf("Fecha: %d/%d/%d\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
+	  		printf("Detalle: %s \n\n", tur.DetalleAtencion);
+		}
+	}
+}
+
+void ranking(FILE *archPro){
+	Turnos tur;
+	int v[100];
+	int profesionales[100];
+	if (archTur == NULL) {
+      printf("Error al abrir el archivo.\n");
+  	}
+  	int i = 0, longitud = 0;
+	while(fread(&tur, sizeof(tur), 1, archTur) == 1){	
+		v[i]=tur.IdProfesional;
+		i++;
+		longitud++;
+	}
+	
+	int maxCount = 0; // Contador máximo de apariciones
+    int masFrecuente = 0; // Número más frecuente
+
+    for (int i = 0; i < longitud; i++) {
+        int count = 0; // Contador para el elemento actual
+        for (int j = 0; j < longitud; j++) {
+            if (v[i] == v[j]) {
+                count++; // Incrementar el contador si encontramos el mismo elemento
+            }
+        }
+        if (count > maxCount) {
+            maxCount = count; // Actualizar el contador máximo y el número más frecuente
+            masFrecuente = v[i];
+        }
+    }
+
+    printf("El profesional que mas turnos tiene es: %d (tiene %d turnos)\n", masFrecuente, maxCount);
+
 }

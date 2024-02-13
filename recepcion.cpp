@@ -3,14 +3,15 @@
 #include <string.h>
 #include "estructuras.h"
 
-void listarTurnos(FILE *archPro);
+void listarTurnos(FILE *archTur);
 FILE *archRec, *archPro, *archPac, *archTur;
 
 bool autenticar();
 void registrarPaciente(FILE *archPac);
 void registrarTurno(FILE *archPac);
 
-int main() {
+int main(){
+	system("TITLE RECEPCION");
 	int op;
 	bool sesion=false;
     Usuarios rec;
@@ -40,7 +41,7 @@ int main() {
     		case 2:
     			if(sesion){
     				system("CLS");
-    				archPac = fopen("pacientes.dat","wb");
+    				archPac = fopen("pacientes.dat","ab");
     				registrarPaciente(archPac);
     				fclose(archPac);
     			}else{
@@ -51,21 +52,21 @@ int main() {
     		case 3:
     			if(sesion){
     				system("CLS");
-    				archTur = fopen("turnos.dat","wb");
+    				archTur = fopen("turnos.dat","ab");
     				registrarTurno(archTur);
     				fclose(archTur);
     			}else{
     				printf("\n	PRIMERO DEBE INICIAR SESION \n	");
     			}
-    			system(" PAUSE");
+    			system("PAUSE");
     			break;
     		case 4:
     			system("CLS");
-					archTur = fopen("turnos.dat","rb");
+				archTur = fopen("turnos.dat","rb");
     			listarTurnos(archTur);
     			fclose(archTur);
     			system("PAUSE");
-					break;
+				break;
     	}
     }while(op!=5);
     return 0;
@@ -145,7 +146,7 @@ void registrarTurno(FILE *archTur){
 	fwrite(&tur,sizeof(tur),1,archTur);
 }
 
-void listarTurnos(FILE *archPro){
+void listarTurnos(FILE *archTur){
 	Turnos tur;
 	int pro;
 	Fecha f;
@@ -162,12 +163,13 @@ void listarTurnos(FILE *archPro){
 	scanf("%d",&f.anio);
   while (fread(&tur, sizeof(tur), 1, archTur) == 1) {
   	if(tur.IdProfesional == pro 
-		&& tur.FechaAtencion.anio == f.anio
-		&& tur.FechaAtencion.mes == f.mes
-		&& tur.FechaAtencion.dia == f.dia){
-  		printf("Profesional: %d \n", tur.IdProfesional);
+	&& tur.FechaAtencion.anio == f.anio
+	&& tur.FechaAtencion.mes == f.mes
+	&& tur.FechaAtencion.dia == f.dia)
+	{
+	  	printf("\nProfesional: %d \n", tur.IdProfesional);
     	printf("Fecha: %d/%d/%d\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
-  		printf("Detalle: %s\n\n\n", tur.DetalleAtencion);
-		}
+  		printf("Detalle: %s \n", tur.DetalleAtencion);
+	}
   }
 }

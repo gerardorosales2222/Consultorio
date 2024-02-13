@@ -97,12 +97,12 @@ main()
 }
 int dibujarMenu(){
 	system("cls");
-	printf("\n\t\t\t******************* Modulo Consultorios*******************\n");
-	printf("\n\t\t\t 1) Iniciar Sesion");
-	printf("\n\t\t\t 2) Visualizar Lista de Espera de Turnos");
-	printf("\n\t\t\t 3) Registrar Historia Clínica");
-    printf("\n\t\t\t 4) Cerrar la aplicacion");
-	printf("\n\n\t\t\t Ingrese la opcion deseada: ");
+	printf("\n\t******************* Modulo Consultorios*******************\n");
+	printf("\n\t 1) Iniciar Sesion");
+	printf("\n\t 2) Visualizar Lista de Espera de Turnos");
+	printf("\n\t 3) Registrar Historia Clínica");
+    printf("\n\t 4) Cerrar la aplicacion");
+	printf("\n\n\t Ingrese la opcion deseada: ");
 	int opc;
 	scanf("%d", &opc);
 	return opc;
@@ -123,7 +123,7 @@ bool iniciarse(FILE *f, int &id)
 	} while (log.Id >= 9999);
 	id = log.Id;
 	
-	printf("\n - Ingrese contrasena: ");
+	printf("\n - Ingrese contrasenia: ");
 	_flushall();
 	gets(log.contra);
 	system("cls");
