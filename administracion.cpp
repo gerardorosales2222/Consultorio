@@ -1,11 +1,9 @@
-/*
-Usuario: adminUTN
-Contraseña: admin
-*/
+//Usuario: adminUTN // Contraseña: admin
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include "estructuras.h"
+#include "structs.h"
 
 Usuarios rec;
 Profesionales pro;
@@ -29,12 +27,12 @@ main(){
 			system("CLS");
 	        printf("Modulo Administracion \n");
 	        printf("========================= \n");
-	        printf("1.- Registrar Profesional \n");
-	        printf("2.- Registrar Usuario Recepcionista \n");
-	        printf("3.- Atenciones por Profesional \n");
-			printf("4.- Ranking de Profesionales por Atenciones \n");
-			printf("5.- Cerrar la aplicacion. \n");
-	    	printf("Ingrese una opcion: ");		
+	        printf("\n1.- Registrar Profesional \n");
+	        printf("\n2.- Registrar Usuario Recepcionista \n");
+	        printf("\n3.- Atenciones por Profesional \n");
+			printf("\n4.- Ranking de Profesionales por Atenciones \n");
+			printf("\n5.- Cerrar la aplicacion. \n");
+	    	printf("\nIngrese una opcion: ");		
 			scanf("%d",&op);
 			switch(op){
 				case 1:

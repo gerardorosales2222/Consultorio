@@ -1,10 +1,12 @@
+//Usuario: adminUTN // Contraseña: admin
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "estructuras.h"
+#include "structs.h"
 
 void listarTurnos(FILE *archTur);
-FILE *archRec, *archPro, *archPac, *archTur;
+FILE *archPro, *archPac, *archTur;
 
 bool autenticar();
 void registrarPaciente(FILE *archPac);
@@ -18,14 +20,14 @@ int main(){
     Profesionales pro;
     do{
     	system("CLS");
-    	printf("\n Modulo del recepcionista");
-    	printf("\n =========================");
-    	printf("\n 1.- Iniciar Sesion");
-    	printf("\n 2.- Registrar Pacientes");
-    	printf("\n 3.- Registrar Turno");
-    	printf("\n 4.- Listado de Atenciones por Profesional y Fecha");
-    	printf("\n 5.- Cerrar la aplicacion.");
-    	printf("\n Ingrese una opcion: ");
+    	printf("Modulo del recepcionista\n");
+    	printf("=========================\n");
+    	printf("\n1.- Iniciar Sesion\n");
+    	printf("\n2.- Registrar Pacientes\n");
+    	printf("\n3.- Registrar Turno\n");
+    	printf("\n4.- Listado de Atenciones por Profesional y Fecha\n");
+    	printf("\n5.- Cerrar la aplicacion\n");
+    	printf("\nIngrese una opcion: ");
     	scanf("%d",&op);
     	switch(op){
     		case 1:

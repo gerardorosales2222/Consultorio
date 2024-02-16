@@ -1,19 +1,17 @@
-//Estructuras usadas en todos lo módulos de la aplicación
-
-typedef struct{
+struct Usuarios{
 	char Usuario[10];
 	char Contrasenia[40];
 	char ApeNom[60];
 	int baja;
-}Usuarios;
+};
 
-typedef struct{
+struct Profesionales{
 	int IdProfesional;
 	char ApeNom[60];
 	char DNI[8];
 	char Telefono[25];
 	int baja;
-}Profesionales;
+};
 
 typedef struct{
 	int dia;
