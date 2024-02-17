@@ -3,6 +3,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<conio.h>
 #include "structs.h"
 
 Usuarios rec;
@@ -18,21 +19,21 @@ void ranking(FILE *archPro);
 FILE *archRec, *archPro, *archTur;
 
 main(){
-	system("TITLE ADMINISTRACION");
+	system("TITLE ADMINISTRACIÓN");
 	int op;
 	archRec = fopen("recepcionistas.dat","ab");
 	archPro = fopen("profesionales.dat","ab");
 	if(autenticar()){
 		do{
 			system("CLS");
-	        printf("Modulo Administracion \n");
-	        printf("========================= \n");
-	        printf("\n1.- Registrar Profesional \n");
-	        printf("\n2.- Registrar Usuario Recepcionista \n");
-	        printf("\n3.- Atenciones por Profesional \n");
-			printf("\n4.- Ranking de Profesionales por Atenciones \n");
-			printf("\n5.- Cerrar la aplicacion. \n");
-	    	printf("\nIngrese una opcion: ");		
+	        printf("\n\n\n\n\t\t Modulo Administracion \n");
+	        printf("\t\t ==================================== \n");
+	        printf("\t\t 1.- Registrar Profesional \n");
+	        printf("\t\t 2.- Registrar Usuario Recepcionista \n");
+	        printf("\t\t 3.- Atenciones por Profesional \n");
+			printf("\t\t 4.- Ranking de Profesionales por Atenciones \n");
+			printf("\t\t 5.- Cerrar la aplicacion. \n\n");
+	    	printf("\t\t Ingrese una opci%cn: ",162);		
 			scanf("%d",&op);
 			switch(op){
 				case 1:
@@ -61,36 +62,64 @@ main(){
 					archTur = fopen("turnos.dat","rb");
 					ranking(archTur);
 					fclose(archTur);
-					system("pause");
+					system("PAUSE");
 					break;
 				case 5:
-					printf("Saliendo...");
 					break;
 				default:
-					printf("Ingrese otra opcion...");
+					system("CLS");
+					printf("\nOpci%cn no v%clida...\n",162,160);
+					system("PAUSE");
 			}
 		}while(op!=5);
+		printf("\n\n\n");
 	}else{
-		printf("Usuario o contrasenia incorrecto. ");
+		system("COLOR 4F");
+		system("CLS");
+		printf("\n\n\n\n\n\n\n\t\t -----------------------------------");
+		printf("\n\t\t   Usuario o contrase%ca incorrecto. \n",164);
+		printf("\t\t -----------------------------------\n\n\n\n\n\n\n");
 	}
 }
 
 bool autenticar(){
 	FILE *arch = fopen("recepcionistas.dat", "rb");
 	char usuario[10], contrasenia[40];
+	char caracter;
 	bool coincidencia = false;
     if (arch == NULL) {
         printf("Error al abrir el archivo.\n");
         return 1;
     }else{
-    	printf("Usuario: ");
+    	printf("\n\n\n\n\t\t------------------------------");
+    	printf("\n\t\t Autenticaci%cn	\n",162);
+    	printf("\t\t------------------------------\n");
+    	printf("\t\t Usuario: ");
     	gets(usuario);
-    	printf("Contrasenia: ");
-    	gets(contrasenia);
+    	printf("\t\t Contrase%ca: ",164);
+    	int i = 0;
+    	while(caracter = getch()){
+    		if(caracter == 13){
+    			contrasenia[i] = '\0';
+    			break;
+    		}else{
+    			if(caracter == 8){
+    				if(i>0){
+    					i--;
+    					printf("\b \b");
+    				}
+				}else{
+	    			printf("*");
+	    			contrasenia[i] = caracter;
+	    			i++;
+	    		}
+    		}    			
+    	}
     	while (fread(&rec, sizeof(rec), 1, arch) == 1) {
 	        if(strcmp(usuario,rec.Usuario)==0&&strcmp(contrasenia,rec.Contrasenia)==0){
 	        	coincidencia = true;
-	        	printf("COINCIDE\n");
+	        	system("COLOR 2F");
+				system("CLS");
 			}
     	}
     }
