@@ -14,6 +14,8 @@ bool verificarContrasenia(char contrasenia[40]);
 bool autenticar();
 
 void registrarProfesional(FILE *archPro);
+void listarMedicos();
+void modificarProfesional(FILE *archPro);
 void listarTurnos(FILE *archPro);
 void ranking(FILE *archPro);
 FILE *archRec, *archPro, *archTur;
@@ -66,6 +68,14 @@ main(){
 					system("PAUSE");
 					break;
 				case 5:
+					break;
+				case 6:
+					system("CLS");
+					archPro = fopen("profesionales.dat","r+b");
+					modificarProfesional(archPro);
+					fclose(archPro);
+					printf("\n\n\n\n\nProfesional modificado. \n");
+					system("PAUSE");
 					break;
 				default:
 					system("CLS");
@@ -313,5 +323,37 @@ void ranking(FILE *archPro){
     }
 
     printf("El profesional que mas turnos tiene es: %d (tiene %d turnos)\n", masFrecuente, maxCount);
+}
 
+void listarMedicos(){
+	FILE *archPro = fopen("profesionales.dat","r+b");
+	Profesionales Pro;
+	printf("\n	Lista de M%cdicos \n",130);
+	printf("	--------------------------------------------\n");
+	while(fread(&Pro, sizeof(Pro), 1, archPro) == 1){
+		printf("	ID: %d		Nombre: %s \n",Pro.IdProfesional, Pro.ApeNom);
+	}
+	printf("\n	--------------------------------------------\n");
+}
+
+void modificarProfesional(FILE *archPro){
+	int id_buscado;
+	Profesionales Pro;
+	listarMedicos();
+	printf("\n Ingrese el ID del m%cdico a modificar: ",130);
+	scanf("%d",&id_buscado);
+	while (fread(&Pro, sizeof(Pro), 1, archPro) == 1) {
+	    if (Pro.IdProfesional == id_buscado) {
+	        printf("%d - %s ",Pro.IdProfesional, Pro.ApeNom);
+	        Pro.IdProfesional = 1;
+	        fseek(archPro, -sizeof(Pro), SEEK_CUR);
+			fwrite(&Pro, sizeof(Pro), 1, archPro);
+	        break;
+	    }
+	}
+	
+	if (feof(archPro)) {
+	    printf("El ID no se corresponde con ning%cn m%cdico de la lista.\n",163,130);
+	    fclose(archPro);
+	}
 }
