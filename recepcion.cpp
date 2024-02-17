@@ -6,7 +6,7 @@
 #include "structs.h"
 
 void listarTurnos(FILE *archTur);
-FILE *archPro, *archPac, *archTur;
+FILE *f_prof, *archPac, *archTur;
 
 bool autenticar();
 void registrarPaciente(FILE *archPac);

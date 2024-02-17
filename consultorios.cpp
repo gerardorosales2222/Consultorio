@@ -3,8 +3,9 @@
 #include <string.h>
 #include "structs.h"
 
-FILE *f_prof;
+FILE *f_prof, *f_turnos;
 bool autenticar();
+void listarTurnos(FILE *f_turnos);
 
 main()
 { 
@@ -33,7 +34,11 @@ main()
     			system("PAUSE");
     			break;
     		case 2:
+    			system("CLS");
+    			f_turnos = fopen("turnos.dat", "rb");
+    			listarTurnos(f_turnos);
     			system("PAUSE");
+    			fclose(f_turnos);
     			break;
     		case 3:
     			
@@ -72,4 +77,22 @@ bool autenticar(){
     }
     return coincidencia;
     fclose(arch);
+}
+
+
+void listarTurnos(FILE *f_turnos){
+	Turnos tur;
+	int pro;
+	Fecha f;
+	if (f_turnos == NULL) {
+      printf("Error al abrir el archivo.\n");
+  	}
+	printf("Pendientes de atenci%cn: ",162);
+  	while (fread(&tur, sizeof(tur), 1, f_turnos) == 1) {
+	{
+	  	printf("\nProfesional: %d \n", tur.IdProfesional);
+    	printf("Fecha: %d/%d/%d\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
+  		printf("Detalle: %s \n", tur.DetalleAtencion);
+	}
+  }
 }
