@@ -26,14 +26,14 @@ main(){
 	if(autenticar()){
 		do{
 			system("CLS");
-	        printf("\n\n\n\n\t\t Modulo Administracion \n");
-	        printf("\t\t ==================================== \n");
+	        printf("\n\n\n\t\t\t  M%cDULO ADMINISTRACI%cN \n",224,224);
+	        printf("\t\t======================================== \n\n");
 	        printf("\t\t 1.- Registrar Profesional \n");
-	        printf("\t\t 2.- Registrar Usuario Recepcionista \n");
+	        printf("\t\t 2.- Registrar Usuario \n");
 	        printf("\t\t 3.- Atenciones por Profesional \n");
-			printf("\t\t 4.- Ranking de Profesionales por Atenciones \n");
-			printf("\t\t 5.- Cerrar la aplicacion. \n\n");
-	    	printf("\t\t Ingrese una opci%cn: ",162);		
+			printf("\t\t 4.- Ranking de Profesionales \n");
+			printf("\t\t 5.- Cerrar la aplicaci%cn. \n\n",162);
+	    	printf("\t\tIngrese una opci%cn: ",162);		
 			scanf("%d",&op);
 			switch(op){
 				case 1:
@@ -41,7 +41,8 @@ main(){
 					archPro = fopen("profesionales.dat","ab");
 					registrarProfesional(archPro);
 					fclose(archPro);
-					system("pause");
+					printf("\n\n\n\n\nProfesional registrado. \n");
+					system("PAUSE");
 					break;
 				case 2:
 					system("CLS");
@@ -132,16 +133,18 @@ void registrarProfesional(FILE *archPro){
 	Profesionales pro;
 	pro.baja=0;
 	_flushall();
-	printf("Ingrese Apellido y Nombre: ");
+	printf("\n REGISTRAR PROFESIONAL \n");
+	printf(" ------------------------------\n\n");
+	printf("\t Apellido y Nombre: ");
 	gets(pro.ApeNom);
 	_flushall();
-	printf("ID Profesional: ");
+	printf("\t ID Profesional: ");
 	scanf("%d",&pro.IdProfesional);
 	_flushall();
-	printf("DNI: ");
+	printf("\t DNI: ");
 	gets(pro.DNI);
 	_flushall();
-	printf("Tel: ");
+	printf("\t Tel: ");
 	gets(pro.Telefono);
 	_flushall();
 	fwrite(&pro,sizeof(pro),1,archPro);
@@ -151,19 +154,21 @@ void registrarRecepcionista(FILE *archRec){
 	char user[10],contrasenia[40];
 	_flushall();
 	rec.baja=0;
+	printf("\n REGISTRAR USUARIO \n");
+	printf(" ------------------------------\n\n");
 	do{
-		printf("Ingrese usuario: ");
+		printf("\t Ingrese usuario: ");
 		gets(user);
 	}while(verificarUsuario(user)==false);
 	strcpy(rec.Usuario,user);
 	_flushall();
 	do{
-		printf("Ingrese Contrasenia: ");
+		printf("\t Ingrese Contrase%ca: ",164);
 		gets(contrasenia);
 	}while(verificarContrasenia(contrasenia)==false);
 	strcpy(rec.Contrasenia,contrasenia);
 	_flushall();
-	printf("Ingrese Apellido y Nombre: ");
+	printf("\t Ingrese Apellido y Nombre del usuario: ");
 	gets(rec.ApeNom);
 	_flushall();
 	fwrite(&rec,sizeof(rec),1,archRec);
@@ -187,24 +192,24 @@ bool verificarUsuario(char usuario[10]){
 				verificado = true;
 		}else{
 			verificado = false;
-			printf("Debe empezar con minusculas ");
+			printf("\t Debe empezar con minusculas \n");
 		}
     	if(may<2){
-				printf("Debe tener al menos dos Mayusculas.\n");
+				printf("\t Debe tener al menos dos Mayusculas.\n");
 				verificado = false;
 			}
 		if(digitos>3){
-			printf("No puede tener mas de 3 digitos ");
+			printf("\t No puede tener mas de 3 digitos \n");
 			verificado = false;
 		}
 		while(fread(&rec, sizeof(rec), 1, arch) == 1) {
 	        if(strcmp(usuario,rec.Usuario)==0){
 	        	verificado = false;
-	        	printf("Ya existe ese nombre de usuario \n");
+	        	printf("\t Ya existe ese nombre de usuario \n");
 			}
     	}
 	}else{
-		printf("Debe tener de 6 a 10 letras.\n");
+		printf("\t Debe tener de 6 a 10 letras.\n");
 		verificado = false;
 	}
 	return verificado;
@@ -238,19 +243,19 @@ bool verificarContrasenia(char contrasenia[40]){
 						break;
 					default:
 						verificado = false;
-						printf("\nNo se acepta. Debe ser alfanumerico. ");
+						printf("\n No se acepta. Debe ser alfanumerico. ");
 				}
 				anterior = contrasenia[i];
 		}
 		if(num>0 && min>0 && may>0){
-			printf("\nContrasenia guardada.\n");
+			printf("\t Contrase%ca OK. \n",164);
 			verificado = true;
 		}else{
-			printf("\nNo se guardo \n");
+			printf(" No se guard%c. Debe tener al menos un nro, una min%cscula y una may%cscula \n",162,163,163);
 			verificado = false;
 		}
 	}else{
-		printf("Debe tener entre 6 y 32 caracteres\n");
+		printf("\t Debe tener entre 6 y 32 caracteres\n");
 		verificado = false;
 	}
 	return verificado;
@@ -262,16 +267,19 @@ void listarTurnos(FILE *archTur){
 	if (archTur == NULL) {
       printf("Error al abrir el archivo.\n");
   	}
-	printf("Ingrese ID del profesional: ");
+  	printf("\n ATENCIONES POR PROFESIONAL \n");
+	printf(" -----------------------------------------------------------\n\n");
+	printf(" Ingrese ID del profesional: ");
 	scanf("%d",&pro);
 	while (fread(&tur, sizeof(tur), 1, archTur) == 1){
 		if(tur.IdProfesional == pro)
 		{
-		  	printf("\nProfesional: %d \n", tur.IdProfesional);
-	    	printf("Fecha: %d/%d/%d\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
-	  		printf("Detalle: %s \n\n", tur.DetalleAtencion);
+		  	printf("\n Profesional: %d \n", tur.IdProfesional);
+		  	printf(" DNI Paciente: %s\n",tur.DNI);
+	    	printf(" Fecha: %d/%d/%d\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
+			printf(" Detalle: %s \n", tur.DetalleAtencion);
 		}
-	}
+	}printf("\n");
 }
 
 void ranking(FILE *archPro){

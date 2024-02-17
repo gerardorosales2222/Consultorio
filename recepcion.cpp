@@ -3,12 +3,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <conio.h>
 #include "structs.h"
 
 void listarTurnos(FILE *archTur);
-FILE *f_prof, *archPac, *archTur;
+FILE *archPro, *archPac, *archTur;
 
 bool autenticar();
+void listarMedicos();
 void registrarPaciente(FILE *archPac);
 void registrarTurno(FILE *archPac);
 
@@ -20,45 +22,46 @@ int main(){
     Profesionales pro;
     do{
     	system("CLS");
-    	printf("Modulo del recepcionista\n");
-    	printf("=========================\n");
-    	printf("\n1.- Iniciar Sesion\n");
-    	printf("\n2.- Registrar Pacientes\n");
-    	printf("\n3.- Registrar Turno\n");
-    	printf("\n4.- Listado de Atenciones por Profesional y Fecha\n");
-    	printf("\n5.- Cerrar la aplicacion\n");
-    	printf("\nIngrese una opcion: ");
+		printf("\n\n\n\t\t\t    M%cDULO RECEPCI%cN \n",224,224);
+	    printf("\t\t======================================== \n\n");
+    	printf("\t\t 1.- Iniciar Sesi%cn\n",162);
+    	printf("\t\t 2.- Registrar Pacientes\n");
+    	printf("\t\t 3.- Registrar Turno\n");
+    	printf("\t\t 4.- Listado de Atenciones por Profesional y Fecha\n");
+    	printf("\t\t 5.- Cerrar la aplicaci%cn\n",162);
+    	printf("\n\t\tIngrese una opci%cn: ",162);
     	scanf("%d",&op);
     	switch(op){
     		case 1:
     			system("CLS");
     			if(autenticar()){
     				sesion=true;
-    				printf("\nAutenticado \n");
+    				system("COLOR 3F");
+    				printf("\n\n\n\n\n\tAutenticado \n\t");
     			}else{
-    				printf("\nUsuario o contrasenia incorrecta \n");
+    				printf("\n\n\n\n\n\tUsuario o contrasenia incorrecta \n");
     			}
     			system("PAUSE");
     			break;
     		case 2:
+    			system("CLS");
     			if(sesion){
-    				system("CLS");
     				archPac = fopen("pacientes.dat","ab");
     				registrarPaciente(archPac);
     				fclose(archPac);
     			}else{
-    				printf("\n	PRIMERO DEBE INICIAR SESION \n	");
+    				printf("\n\n\n\n\n   PRIMERO DEBE INICIAR SESION. ");
     			}
     			system(" PAUSE");
     			break;
     		case 3:
+    			system("CLS");
     			if(sesion){
-    				system("CLS");
     				archTur = fopen("turnos.dat","ab");
     				registrarTurno(archTur);
     				fclose(archTur);
     			}else{
-    				printf("\n	PRIMERO DEBE INICIAR SESION \n	");
+    				printf("\n\n\n\n\n   PRIMERO DEBE INICIAR SESION. ");
     			}
     			system("PAUSE");
     			break;
@@ -71,6 +74,7 @@ int main(){
 				break;
     	}
     }while(op!=5);
+    printf("\n\n\n");
     return 0;
 }
 
@@ -79,19 +83,41 @@ bool autenticar(){
 	FILE *arch = fopen("recepcionistas.dat", "rb");
 	char usuario[10], contrasenia[40];
 	bool coincidencia = false;
+	char caracter;
     if (arch == NULL) {
         printf("Error al abrir el archivo.\n");
         return 1;
     }else{
     	_flushall();
-    	printf("Usuario: ");
+    	printf("\n\n\n\n\t\t------------------------------");
+    	printf("\n\t\t Autenticaci%cn	\n",162);
+    	printf("\t\t------------------------------\n");
+    	printf("\t\t Usuario: ");
     	gets(usuario);
-    	_flushall();
-    	printf("Contrasenia: ");
-    	gets(contrasenia);
+    	printf("\t\t Contrase%ca: ",164);
+    	int i = 0;
+    	while(caracter = getch()){
+    		if(caracter == 13){
+    			contrasenia[i] = '\0';
+    			break;
+    		}else{
+    			if(caracter == 8){
+    				if(i>0){
+    					i--;
+    					printf("\b \b");
+    				}
+				}else{
+	    			printf("*");
+	    			contrasenia[i] = caracter;
+	    			i++;
+	    		}
+    		}    			
+    	}
     	while (fread(&rec, sizeof(rec), 1, arch) == 1) {
 	        if(strcmp(usuario,rec.Usuario)==0&&strcmp(contrasenia,rec.Contrasenia)==0){
 	        	coincidencia = true;
+	        	system("COLOR 2F");
+				system("CLS");
 			}
     	}
     }
@@ -125,24 +151,37 @@ void registrarPaciente(FILE *archPac){
 	fwrite(&pac,sizeof(pac),1,archPac);	
 }
 
+void listarMedicos(){
+	FILE *archPro = fopen("profesionales.dat","r+b");
+	Profesionales Pro;
+	printf("	M%cdicos disponibles \n",130);
+	while(fread(&Pro, sizeof(Pro), 1, archPro) == 1){
+		printf("	ID: %d		Nombre: %s \n",Pro.IdProfesional, Pro.ApeNom);
+	}
+}
+
 void registrarTurno(FILE *archTur){
 	Turnos tur;
 	tur.baja = 0;
+	printf("\n REGISTRAR TURNO \n");
+	printf(" --------------------------------------------------\n\n");
+	listarMedicos();
+	printf(" --------------------------------------------------");
 	_flushall();
-	printf("ID Medico: ");
+	printf("\n ID M%cdico: ",130);
 	scanf("%d",&tur.IdProfesional);
 	_flushall();
-	printf("Fecha Atencion \n->Dia: ");
+	printf(" Fecha de Atenci%cn \n ->D%ca: ",162,161);
 	scanf("%d",&tur.FechaAtencion.dia);	
-	printf("->Mes: ");
+	printf(" ->Mes: ");
 	scanf("%d",&tur.FechaAtencion.mes);
-	printf("->Anio: ");
+	printf(" ->A%co: ",164);
 	scanf("%d",&tur.FechaAtencion.anio);
 	_flushall();
-	printf("DNI Paciente: ");
+	printf(" DNI Paciente: ");
 	gets(tur.DNI);
 	_flushall();
-	printf("Detalle atencion: ");
+	printf(" Detalle atenci%cn: ",162);
 	gets(tur.DetalleAtencion);
 	_flushall();
 	fwrite(&tur,sizeof(tur),1,archTur);
