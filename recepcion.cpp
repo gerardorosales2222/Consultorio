@@ -153,7 +153,6 @@ void registrarPaciente(FILE *archPac){
 	scanf("%d",&pac.FechaDeNac.mes);
 	printf(" ->A%co: ",164);
 	scanf("%d",&pac.FechaDeNac.anio);
-	_flushall();
 	fwrite(&pac,sizeof(pac),1,archPac);	
 }
 
