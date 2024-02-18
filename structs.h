@@ -21,17 +21,17 @@ typedef struct{
 
 typedef struct{
 	char ApeNom[60];
-	char DNI[8];
-	char Localidad[60];
-	Fecha FechaDeNac;
+	int DNI;
 	char Telefono[10];
+	Fecha FechaDeNac;
+	char Localidad[60];
 	int baja;
 }Pacientes;
 
 typedef struct{
 	int IdProfesional;
 	Fecha FechaAtencion;
-	char DNI[8];
+	int DNI;
 	char DetalleAtencion[380];
 	int baja;
 }Turnos;

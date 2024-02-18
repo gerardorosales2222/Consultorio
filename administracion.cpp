@@ -16,9 +16,9 @@ bool autenticar();
 void registrarProfesional(FILE *archPro);
 void listarMedicos();
 void modificarProfesional(FILE *archPro);
-void listarTurnos(FILE *archPro);
+void listarTurnos(FILE *archTur, FILE *archPro, FILE *archPac);
 void ranking(FILE *archPro);
-FILE *archRec, *archPro, *archTur;
+FILE *archRec, *archPro, *archPac, *archTur;
 
 main(){
 	system("TITLE ADMINISTRACIÓN");
@@ -56,7 +56,9 @@ main(){
 				case 3:
 					system("CLS");
 					archTur = fopen("turnos.dat","rb");
-					listarTurnos(archTur);
+					archPro = fopen("profesionales.dat","rb");
+					archPac = fopen("pacientes.dat","rb");
+					listarTurnos(archTur, archPro, archPac);
 					fclose(archTur);
 					system("pause");
 					break;
@@ -271,25 +273,41 @@ bool verificarContrasenia(char contrasenia[40]){
 	return verificado;
 }
 
-void listarTurnos(FILE *archTur){
+void listarTurnos(FILE *archTur, FILE *archPro, FILE *archPac){
 	Turnos tur;
-	int pro;
+	Profesionales Pro;
+	Pacientes Pac;
+	int prof;
+	Fecha f;
 	if (archTur == NULL) {
       printf("Error al abrir el archivo.\n");
   	}
-  	printf("\n ATENCIONES POR PROFESIONAL \n");
-	printf(" -----------------------------------------------------------\n\n");
-	printf(" Ingrese ID del profesional: ");
-	scanf("%d",&pro);
-	while (fread(&tur, sizeof(tur), 1, archTur) == 1){
-		if(tur.IdProfesional == pro)
-		{
-		  	printf("\n Profesional: %d \n", tur.IdProfesional);
-		  	printf(" DNI Paciente: %s\n",tur.DNI);
-	    	printf(" Fecha: %d/%d/%d\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
-			printf(" Detalle: %s \n", tur.DetalleAtencion);
+	printf("Ingrese ID del profesional: ");
+	scanf("%d",&prof);
+	printf("\n\n");
+  	while (fread(&tur, sizeof(tur), 1, archTur) == 1) {
+  	if(tur.IdProfesional == prof)
+	{
+		while (fread(&Pro, sizeof(Pro), 1, archPro) == 1) {
+	    	if (Pro.IdProfesional == tur.IdProfesional) {
+	        	printf(" Profesional: %d - %s \n",Pro.IdProfesional, Pro.ApeNom);
+			}
 		}
-	}printf("\n");
+		while (fread(&Pac, sizeof(Pac), 1, archPac) == 1) {
+	    	if (Pac.DNI == tur.DNI) {
+	        	printf(" Paciente: %d - %s \n",Pac.DNI, Pac.ApeNom);
+			}
+		}
+    printf(" Fecha: %d/%d/%d\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
+  	printf(" Detalle: %s \n", tur.DetalleAtencion);
+  	if(tur.baja==0){
+  		printf(" Estado: Pendiente de atenci%cn \n\n",162);
+  	}
+  	}
+  	rewind(archPro);
+  	rewind(archPac);
+  }
+  printf("\n");
 }
 
 void ranking(FILE *archPro){

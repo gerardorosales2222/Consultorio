@@ -76,6 +76,10 @@ int main(){
     			fclose(archPro);
     			system("PAUSE");
 				break;
+			case 6:
+				system("CLS");
+				listarPacientes();
+				system("PAUSE");
     	}
     }while(op!=5);
     printf("\n\n\n");
@@ -139,13 +143,12 @@ void registrarPaciente(FILE *archPac){
 	gets(pac.ApeNom);
 	_flushall();
 	printf(" DNI: ");
-	gets(pac.DNI);
-	_flushall();
-	printf(" Localidad: ");
-	gets(pac.Localidad);
+	scanf("%d",&pac.DNI);
 	_flushall();
 	printf(" Tel: ");
 	gets(pac.Telefono);
+	printf(" Localidad: ");
+	gets(pac.Localidad);
 	_flushall();
 	printf(" Fecha de Nac \n ->Dia: ");
 	scanf("%d",&pac.FechaDeNac.dia);	
@@ -170,7 +173,7 @@ void listarPacientes(){
 	Pacientes Pac;
 	printf("	Pacientes \n");
 	while(fread(&Pac, sizeof(Pac), 1, archPac) == 1){
-		printf("	DNI: %s 	Nombre: %s Tel:%s\n",Pac.DNI,Pac.ApeNom,Pac.Telefono);
+		printf("	DNI: %d - %s \n",Pac.DNI, Pac.ApeNom);
 	}
 	fclose(archPac);
 }
@@ -197,11 +200,10 @@ void registrarTurno(FILE *archTur){
 	listarPacientes();
 	printf(" --------------------------------------------------\n");
 	printf(" DNI Paciente: ");
-	gets(tur.DNI);
+	scanf("%d",&tur.DNI);
 	_flushall();
 	printf(" Detalle atenci%cn: ",162);
 	gets(tur.DetalleAtencion);
-	_flushall();
 	fwrite(&tur,sizeof(tur),1,archTur);
 }
 
@@ -216,12 +218,13 @@ void listarTurnos(FILE *archTur, FILE *archPro, FILE *archPac){
   	}
 	printf("Ingrese ID del profesional: ");
 	scanf("%d",&prof);
-	printf("Ingrese Fecha de Atencion \n->Dia: ");
+	printf("Ingrese Fecha de Atenci%cn \n->D%ca: ",162,161);
 	scanf("%d",&f.dia);	
 	printf("->Mes: ");
 	scanf("%d",&f.mes);
 	printf("->A%co: ",164);
 	scanf("%d",&f.anio);
+	printf("\n\n");
   	while (fread(&tur, sizeof(tur), 1, archTur) == 1) {
   	if(tur.IdProfesional == prof 
 	&& tur.FechaAtencion.anio == f.anio
@@ -234,13 +237,18 @@ void listarTurnos(FILE *archTur, FILE *archPro, FILE *archPac){
 			}
 		}
 		while (fread(&Pac, sizeof(Pac), 1, archPac) == 1) {
-	    	if (strcmp(Pac.DNI, tur.DNI) == 1) {
-	        	printf(" Paciente: %s - %s \n",Pac.DNI, Pac.ApeNom);
+	    	if (Pac.DNI == tur.DNI) {
+	        	printf(" Paciente: %d - %s \n",Pac.DNI, Pac.ApeNom);
 			}
 		}
     printf(" Fecha: %d/%d/%d\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
   	printf(" Detalle: %s \n", tur.DetalleAtencion);
+  	if(tur.baja==0){
+  		printf(" Estado: Pendiente de atenci%cn \n\n",162);
   	}
+  	}
+  	rewind(archPro);
+  	rewind(archPac);
   }
   printf("\n");
 }
