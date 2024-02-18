@@ -6,11 +6,12 @@
 #include <conio.h>
 #include "structs.h"
 
-void listarTurnos(FILE *archTur);
+void listarTurnos(FILE *archTur, FILE *archPro, FILE *archPac);
 FILE *archPro, *archPac, *archTur;
 
 bool autenticar();
 void listarMedicos();
+void listarPacientes();
 void registrarPaciente(FILE *archPac);
 void registrarTurno(FILE *archPac);
 
@@ -39,14 +40,14 @@ int main(){
     				system("COLOR 3F");
     				printf("\n\n\n\n\n\tAutenticado \n\t");
     			}else{
-    				printf("\n\n\n\n\n\tUsuario o contrasenia incorrecta \n");
+    				printf("\n\n\n\n\nUsuario o contrasenia incorrecta. ");
     			}
     			system("PAUSE");
     			break;
     		case 2:
     			system("CLS");
     			if(sesion){
-    				archPac = fopen("pacientes.dat","ab");
+    				archPac = fopen("pacientes.dat","a+b");
     				registrarPaciente(archPac);
     				fclose(archPac);
     			}else{
@@ -57,7 +58,7 @@ int main(){
     		case 3:
     			system("CLS");
     			if(sesion){
-    				archTur = fopen("turnos.dat","ab");
+    				archTur = fopen("turnos.dat","a+b");
     				registrarTurno(archTur);
     				fclose(archTur);
     			}else{
@@ -68,8 +69,11 @@ int main(){
     		case 4:
     			system("CLS");
 				archTur = fopen("turnos.dat","rb");
-    			listarTurnos(archTur);
+				archPro = fopen("profesionales.dat","r+b");
+				archPac = fopen("pacientes.dat","r+b");
+    			listarTurnos(archTur, archPro, archPac);
     			fclose(archTur);
+    			fclose(archPro);
     			system("PAUSE");
 				break;
     	}
@@ -128,24 +132,26 @@ bool autenticar(){
 void registrarPaciente(FILE *archPac){
 	Pacientes pac;
 	pac.baja = 0;
+	printf("\n REGISTRAR PACIENTE \n");
+	printf(" ------------------------------\n\n");
 	_flushall();
-	printf("Ingrese Apellido y Nombre: ");
+	printf(" Apellido y Nombre: ");
 	gets(pac.ApeNom);
 	_flushall();
-	printf("DNI: ");
+	printf(" DNI: ");
 	gets(pac.DNI);
 	_flushall();
-	printf("Localidad: ");
+	printf(" Localidad: ");
 	gets(pac.Localidad);
 	_flushall();
-	printf("Tel: ");
+	printf(" Tel: ");
 	gets(pac.Telefono);
 	_flushall();
-	printf("Fecha de Nac \n->Dia: ");
+	printf(" Fecha de Nac \n ->Dia: ");
 	scanf("%d",&pac.FechaDeNac.dia);	
-	printf("->Mes: ");
+	printf(" ->Mes: ");
 	scanf("%d",&pac.FechaDeNac.mes);
-	printf("->Anio: ");
+	printf(" ->A%co: ",164);
 	scanf("%d",&pac.FechaDeNac.anio);
 	_flushall();
 	fwrite(&pac,sizeof(pac),1,archPac);	
@@ -158,6 +164,16 @@ void listarMedicos(){
 	while(fread(&Pro, sizeof(Pro), 1, archPro) == 1){
 		printf("	ID: %d		Nombre: %s \n",Pro.IdProfesional, Pro.ApeNom);
 	}
+}
+
+void listarPacientes(){
+	FILE *archPac = fopen("pacientes.dat","r+b");
+	Pacientes Pac;
+	printf("	Pacientes \n");
+	while(fread(&Pac, sizeof(Pac), 1, archPac) == 1){
+		printf("	DNI: %s 	Nombre: %s Tel:%s\n",Pac.DNI,Pac.ApeNom,Pac.Telefono);
+	}
+	fclose(archPac);
 }
 
 void registrarTurno(FILE *archTur){
@@ -178,6 +194,9 @@ void registrarTurno(FILE *archTur){
 	printf(" ->A%co: ",164);
 	scanf("%d",&tur.FechaAtencion.anio);
 	_flushall();
+	printf(" --------------------------------------------------\n");
+	listarPacientes();
+	printf(" --------------------------------------------------\n");
 	printf(" DNI Paciente: ");
 	gets(tur.DNI);
 	_flushall();
@@ -187,30 +206,42 @@ void registrarTurno(FILE *archTur){
 	fwrite(&tur,sizeof(tur),1,archTur);
 }
 
-void listarTurnos(FILE *archTur){
+void listarTurnos(FILE *archTur, FILE *archPro, FILE *archPac){
 	Turnos tur;
-	int pro;
+	Profesionales Pro;
+	Pacientes Pac;
+	int prof;
 	Fecha f;
 	if (archTur == NULL) {
       printf("Error al abrir el archivo.\n");
-  }
+  	}
 	printf("Ingrese ID del profesional: ");
-	scanf("%d",&pro);
+	scanf("%d",&prof);
 	printf("Ingrese Fecha de Atencion \n->Dia: ");
 	scanf("%d",&f.dia);	
 	printf("->Mes: ");
 	scanf("%d",&f.mes);
-	printf("->Anio: ");
+	printf("->A%co: ",164);
 	scanf("%d",&f.anio);
-  while (fread(&tur, sizeof(tur), 1, archTur) == 1) {
-  	if(tur.IdProfesional == pro 
+  	while (fread(&tur, sizeof(tur), 1, archTur) == 1) {
+  	if(tur.IdProfesional == prof 
 	&& tur.FechaAtencion.anio == f.anio
 	&& tur.FechaAtencion.mes == f.mes
 	&& tur.FechaAtencion.dia == f.dia)
 	{
-	  	printf("\nProfesional: %d \n", tur.IdProfesional);
-    	printf("Fecha: %d/%d/%d\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
-  		printf("Detalle: %s \n", tur.DetalleAtencion);
-	}
+		while (fread(&Pro, sizeof(Pro), 1, archPro) == 1) {
+	    	if (Pro.IdProfesional == tur.IdProfesional) {
+	        	printf(" Profesional: %d - %s \n",Pro.IdProfesional, Pro.ApeNom);
+			}
+		}
+		while (fread(&Pac, sizeof(Pac), 1, archPac) == 1) {
+	    	if (strcmp(Pac.DNI, tur.DNI) == 1) {
+	        	printf(" Paciente: %s - %s \n",Pac.DNI, Pac.ApeNom);
+			}
+		}
+    printf(" Fecha: %d/%d/%d\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
+  	printf(" Detalle: %s \n", tur.DetalleAtencion);
+  	}
   }
+  printf("\n");
 }

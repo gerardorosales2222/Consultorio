@@ -331,7 +331,9 @@ void listarMedicos(){
 	printf("\n	Lista de M%cdicos \n",130);
 	printf("	--------------------------------------------\n");
 	while(fread(&Pro, sizeof(Pro), 1, archPro) == 1){
-		printf("	ID: %d		Nombre: %s \n",Pro.IdProfesional, Pro.ApeNom);
+		if(Pro.baja==0){
+			printf("	ID: %d		Nombre: %s \n",Pro.IdProfesional, Pro.ApeNom);
+		}
 	}
 	printf("\n	--------------------------------------------\n");
 }
@@ -344,10 +346,23 @@ void modificarProfesional(FILE *archPro){
 	scanf("%d",&id_buscado);
 	while (fread(&Pro, sizeof(Pro), 1, archPro) == 1) {
 	    if (Pro.IdProfesional == id_buscado) {
-	        printf("%d - %s ",Pro.IdProfesional, Pro.ApeNom);
-	        Pro.IdProfesional = 1;
+	        printf(" %d - %s \n",Pro.IdProfesional, Pro.ApeNom);
+	        _flushall();
+	        printf("\t Apellido y Nombre: ");
+			gets(Pro.ApeNom);
+			_flushall();
+			printf("\t ID Profesional: ");
+			scanf("%d",&Pro.IdProfesional);
+			_flushall();
+			printf("\t DNI: ");
+			gets(Pro.DNI);
+			_flushall();
+			printf("\t Tel: ");
+			gets(Pro.Telefono);
+			        
 	        fseek(archPro, -sizeof(Pro), SEEK_CUR);
 			fwrite(&Pro, sizeof(Pro), 1, archPro);
+			fclose(archPro);
 	        break;
 	    }
 	}
