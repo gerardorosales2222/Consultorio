@@ -6,7 +6,7 @@
 
 FILE *f_profesionales, *f_turnos, *f_pacientes;
 bool autenticar();
-void listarTurnos(FILE *archTur, FILE *archPro, FILE *archPac);
+void listarTurnos(FILE *f_turnos, FILE *f_profesionales, FILE *f_pacientes);
 
 int main()
 { 
@@ -60,11 +60,11 @@ int main()
 
 bool autenticar(){
 	Usuarios rec;
-	FILE *arch = fopen("recepcionistas.dat", "rb");
+	FILE *f_usuarios = fopen("recepcionistas.dat", "rb");
 	char usuario[10], contrasenia[40];
 	bool coincidencia = false;
 	char caracter;
-    if (arch == NULL) {
+    if (f_usuarios == NULL) {
         printf("Error al abrir el archivo.\n");
         return 1;
     }else{
@@ -93,7 +93,7 @@ bool autenticar(){
 	    		}
     		}    			
     	}
-    	while (fread(&rec, sizeof(rec), 1, arch) == 1) {
+    	while (fread(&rec, sizeof(rec), 1, f_usuarios) == 1) {
 	        if(strcmp(usuario,rec.Usuario)==0&&strcmp(contrasenia,rec.Contrasenia)==0){
 	        	coincidencia = true;
 	        	system("COLOR CF");
@@ -102,29 +102,29 @@ bool autenticar(){
     	}
     }
     return coincidencia;
-    fclose(arch);
+    fclose(f_usuarios);
 }
 
-void listarTurnos(FILE *archTur, FILE *archPro, FILE *archPac){
+void listarTurnos(FILE *f_turnos, FILE *f_profesionales, FILE *f_pacientes){
 	Turnos tur;
 	Profesionales Pro;
 	Pacientes Pac;
 	int prof;
 	Fecha f;
-	if (archTur == NULL) {
+	if (f_turnos == NULL) {
       printf("Error al abrir el archivo.\n");
   	}
 	
 	printf("\n\n");
-  	while (fread(&tur, sizeof(tur), 1, archTur) == 1) {
+  	while (fread(&tur, sizeof(tur), 1, f_turnos) == 1) {
   	if(tur.baja == 0)
 	{
-		while (fread(&Pro, sizeof(Pro), 1, archPro) == 1) {
+		while (fread(&Pro, sizeof(Pro), 1, f_profesionales) == 1) {
 	    	if (Pro.IdProfesional == tur.IdProfesional) {
 	        	printf(" Profesional: %d - %s \n",Pro.IdProfesional, Pro.ApeNom);
 			}
 		}
-		while (fread(&Pac, sizeof(Pac), 1, archPac) == 1) {
+		while (fread(&Pac, sizeof(Pac), 1, f_pacientes) == 1) {
 	    	if (Pac.DNI == tur.DNI) {
 	        	printf(" Paciente: %d - %s \n",Pac.DNI, Pac.ApeNom);
 			}
@@ -132,8 +132,8 @@ void listarTurnos(FILE *archTur, FILE *archPro, FILE *archPac){
     printf(" Fecha: %d/%d/%d\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
   	printf(" Detalle: %s \n", tur.DetalleAtencion);
   	}
-  	rewind(archPro);
-  	rewind(archPac);
+  	rewind(f_profesionales);
+  	rewind(f_pacientes);
   }
   printf("\n");
 }

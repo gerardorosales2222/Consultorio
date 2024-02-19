@@ -8,23 +8,23 @@
 
 Usuarios rec;
 Profesionales pro;
-void registrarRecepcionista(FILE *archRec);
+void registrarRecepcionista(FILE *f_usuarios);
 bool verificarUsuario(char user[10]);
 bool verificarContrasenia(char contrasenia[40]);
 bool autenticar();
 
-void registrarProfesional(FILE *archPro);
+void registrarProfesional(FILE *f_profesionales);
 void listarMedicos();
-void modificarProfesional(FILE *archPro);
-void listarTurnos(FILE *archTur, FILE *archPro, FILE *archPac);
-void ranking(FILE *archPro);
-FILE *archRec, *archPro, *archPac, *archTur;
+void modificarProfesional(FILE *f_profesionales);
+void listarTurnos(FILE *f_turnos, FILE *f_profesionales, FILE *f_pacientes);
+void ranking(FILE *f_profesionales);
+FILE *f_usuarios, *f_profesionales, *f_pacientes, *f_turnos;
 
 main(){
 	system("TITLE ADMINISTRACIÓN");
 	int op;
-	archRec = fopen("recepcionistas.dat","ab");
-	archPro = fopen("profesionales.dat","ab");
+	f_usuarios = fopen("recepcionistas.dat","ab");
+	f_profesionales = fopen("profesionales.dat","ab");
 	if(autenticar()){
 		do{
 			system("CLS");
@@ -40,42 +40,42 @@ main(){
 			switch(op){
 				case 1:
 					system("CLS");
-					archPro = fopen("profesionales.dat","ab");
-					registrarProfesional(archPro);
-					fclose(archPro);
+					f_profesionales = fopen("profesionales.dat","ab");
+					registrarProfesional(f_profesionales);
+					fclose(f_profesionales);
 					printf("\n\n\n\n\nProfesional registrado. \n");
 					system("PAUSE");
 					break;
 				case 2:
 					system("CLS");
-					archRec = fopen("recepcionistas.dat","ab");
-					registrarRecepcionista(archRec);
-					fclose(archRec);
+					f_usuarios = fopen("recepcionistas.dat","ab");
+					registrarRecepcionista(f_usuarios);
+					fclose(f_usuarios);
 					system("pause");
 					break;
 				case 3:
 					system("CLS");
-					archTur = fopen("turnos.dat","rb");
-					archPro = fopen("profesionales.dat","rb");
-					archPac = fopen("pacientes.dat","rb");
-					listarTurnos(archTur, archPro, archPac);
-					fclose(archTur);
+					f_turnos = fopen("turnos.dat","rb");
+					f_profesionales = fopen("profesionales.dat","rb");
+					f_pacientes = fopen("pacientes.dat","rb");
+					listarTurnos(f_turnos, f_profesionales, f_pacientes);
+					fclose(f_turnos);
 					system("pause");
 					break;
 				case 4:
 					system("CLS");
-					archTur = fopen("turnos.dat","rb");
-					ranking(archTur);
-					fclose(archTur);
+					f_turnos = fopen("turnos.dat","rb");
+					ranking(f_turnos);
+					fclose(f_turnos);
 					system("PAUSE");
 					break;
 				case 5:
 					break;
 				case 6:
 					system("CLS");
-					archPro = fopen("profesionales.dat","r+b");
-					modificarProfesional(archPro);
-					fclose(archPro);
+					f_profesionales = fopen("profesionales.dat","r+b");
+					modificarProfesional(f_profesionales);
+					fclose(f_profesionales);
 					printf("\n\n\n\n\nProfesional modificado. \n");
 					system("PAUSE");
 					break;
@@ -96,11 +96,11 @@ main(){
 }
 
 bool autenticar(){
-	FILE *arch = fopen("recepcionistas.dat", "rb");
+	FILE *f_usuarios = fopen("recepcionistas.dat", "rb");
 	char usuario[10], contrasenia[40];
 	char caracter;
 	bool coincidencia = false;
-    if (arch == NULL) {
+    if (f_usuarios == NULL) {
         printf("Error al abrir el archivo.\n");
         return 1;
     }else{
@@ -128,7 +128,7 @@ bool autenticar(){
 	    		}
     		}    			
     	}
-    	while (fread(&rec, sizeof(rec), 1, arch) == 1) {
+    	while (fread(&rec, sizeof(rec), 1, f_usuarios) == 1) {
 	        if(strcmp(usuario,rec.Usuario)==0&&strcmp(contrasenia,rec.Contrasenia)==0){
 	        	coincidencia = true;
 	        	system("COLOR 2F");
@@ -137,11 +137,11 @@ bool autenticar(){
     	}
     }
     return coincidencia;
-    fclose(arch);
+    fclose(f_usuarios);
 }
 
 
-void registrarProfesional(FILE *archPro){
+void registrarProfesional(FILE *f_profesionales){
 	Profesionales pro;
 	pro.baja=0;
 	_flushall();
@@ -159,10 +159,10 @@ void registrarProfesional(FILE *archPro){
 	printf("\t Tel: ");
 	gets(pro.Telefono);
 	_flushall();
-	fwrite(&pro,sizeof(pro),1,archPro);
+	fwrite(&pro,sizeof(pro),1,f_profesionales);
 }
 
-void registrarRecepcionista(FILE *archRec){
+void registrarRecepcionista(FILE *f_usuarios){
 	char user[10],contrasenia[40];
 	_flushall();
 	rec.baja=0;
@@ -183,11 +183,11 @@ void registrarRecepcionista(FILE *archRec){
 	printf("\t Ingrese Apellido y Nombre del usuario: ");
 	gets(rec.ApeNom);
 	_flushall();
-	fwrite(&rec,sizeof(rec),1,archRec);
+	fwrite(&rec,sizeof(rec),1,f_usuarios);
 }
 
 bool verificarUsuario(char usuario[10]){
-	FILE *arch = fopen("recepcionistas.dat", "rb");
+	FILE *f_usuarios = fopen("recepcionistas.dat", "rb");
 	int may=0, digitos=0;
 	bool verificado;
 	if(strlen(usuario)>=6 && strlen(usuario)<=10){
@@ -214,7 +214,7 @@ bool verificarUsuario(char usuario[10]){
 			printf("\t No puede tener mas de 3 digitos \n");
 			verificado = false;
 		}
-		while(fread(&rec, sizeof(rec), 1, arch) == 1) {
+		while(fread(&rec, sizeof(rec), 1, f_usuarios) == 1) {
 	        if(strcmp(usuario,rec.Usuario)==0){
 	        	verificado = false;
 	        	printf("\t Ya existe ese nombre de usuario \n");
@@ -273,27 +273,27 @@ bool verificarContrasenia(char contrasenia[40]){
 	return verificado;
 }
 
-void listarTurnos(FILE *archTur, FILE *archPro, FILE *archPac){
+void listarTurnos(FILE *f_turnos, FILE *f_profesionales, FILE *f_pacientes){
 	Turnos tur;
 	Profesionales Pro;
 	Pacientes Pac;
 	int prof;
 	Fecha f;
-	if (archTur == NULL) {
+	if (f_turnos == NULL) {
       printf("Error al abrir el archivo.\n");
   	}
 	printf("Ingrese ID del profesional: ");
 	scanf("%d",&prof);
 	printf("\n\n");
-  	while (fread(&tur, sizeof(tur), 1, archTur) == 1) {
+  	while (fread(&tur, sizeof(tur), 1, f_turnos) == 1) {
   	if(tur.IdProfesional == prof)
 	{
-		while (fread(&Pro, sizeof(Pro), 1, archPro) == 1) {
+		while (fread(&Pro, sizeof(Pro), 1, f_profesionales) == 1) {
 	    	if (Pro.IdProfesional == tur.IdProfesional) {
 	        	printf(" Profesional: %d - %s \n",Pro.IdProfesional, Pro.ApeNom);
 			}
 		}
-		while (fread(&Pac, sizeof(Pac), 1, archPac) == 1) {
+		while (fread(&Pac, sizeof(Pac), 1, f_pacientes) == 1) {
 	    	if (Pac.DNI == tur.DNI) {
 	        	printf(" Paciente: %d - %s \n",Pac.DNI, Pac.ApeNom);
 			}
@@ -304,21 +304,21 @@ void listarTurnos(FILE *archTur, FILE *archPro, FILE *archPac){
   		printf(" Estado: Pendiente de atenci%cn \n\n",162);
   	}
   	}
-  	rewind(archPro);
-  	rewind(archPac);
+  	rewind(f_profesionales);
+  	rewind(f_pacientes);
   }
   printf("\n");
 }
 
-void ranking(FILE *archPro){
+void ranking(FILE *f_profesionales){
 	Turnos tur;
 	int v[100];
 	int profesionales[100];
-	if (archTur == NULL) {
-      printf("Error al abrir el archivo.\n");
+	if (f_turnos == NULL) {
+      printf("Error al abrir el f_usuariosivo.\n");
   	}
   	int i = 0, longitud = 0;
-	while(fread(&tur, sizeof(tur), 1, archTur) == 1){	
+	while(fread(&tur, sizeof(tur), 1, f_turnos) == 1){	
 		v[i]=tur.IdProfesional;
 		i++;
 		longitud++;
