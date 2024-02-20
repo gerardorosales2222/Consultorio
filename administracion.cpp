@@ -315,7 +315,7 @@ void ranking(FILE *f_profesionales){
 	int v[100];
 	int profesionales[100];
 	if (f_turnos == NULL) {
-      printf("Error al abrir el f_usuariosivo.\n");
+      printf("Error al abrir el archivo.\n");
   	}
   	int i = 0, longitud = 0;
 	while(fread(&tur, sizeof(tur), 1, f_turnos) == 1){	

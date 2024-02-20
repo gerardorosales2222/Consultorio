@@ -28,9 +28,9 @@ int main()
     			system("CLS");
     			if(autenticar()){
     				sesion=true;
-    				printf("\nAutenticado \n");
+    				printf("\n\n\n Autenticado \n ");
     			}else{
-    				printf("\nUsuario o contrase%ca incorrecta \n",164);
+    				printf("\n Usuario o contrase%ca incorrecta \n ",164);
     			}
     			system("PAUSE");
     			break;
@@ -115,13 +115,13 @@ void listarTurnos(FILE *f_turnos, FILE *f_profesionales, FILE *f_pacientes){
       printf("Error al abrir el archivo.\n");
   	}
 	
-	printf("\n\n");
+	printf("Informe Lista de espera\n\n");
   	while (fread(&tur, sizeof(tur), 1, f_turnos) == 1) {
   	if(tur.baja == 0)
 	{
 		while (fread(&Pro, sizeof(Pro), 1, f_profesionales) == 1) {
 	    	if (Pro.IdProfesional == tur.IdProfesional) {
-	        	printf(" Profesional: %d - %s \n",Pro.IdProfesional, Pro.ApeNom);
+	        	printf(" Profesional: %d - %s |",Pro.IdProfesional, Pro.ApeNom);
 			}
 		}
 		while (fread(&Pac, sizeof(Pac), 1, f_pacientes) == 1) {
@@ -129,8 +129,8 @@ void listarTurnos(FILE *f_turnos, FILE *f_profesionales, FILE *f_pacientes){
 	        	printf(" Paciente: %d - %s \n",Pac.DNI, Pac.ApeNom);
 			}
 		}
-    printf(" Fecha: %d/%d/%d\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
-  	printf(" Detalle: %s \n", tur.DetalleAtencion);
+	printf(" Detalle: %s \n", tur.DetalleAtencion);
+    printf(" Fecha: %d/%d/%d\n\n", tur.FechaAtencion.dia,tur.FechaAtencion.mes,tur.FechaAtencion.anio);
   	}
   	rewind(f_profesionales);
   	rewind(f_pacientes);
