@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
-#include "structs.h"
+#include "registros.h"
 
 void listarTurnos(FILE *f_turnos, FILE *f_profesionales, FILE *f_pacientes);
 FILE *f_profesionales, *f_pacientes, *f_turnos;
@@ -156,6 +156,7 @@ void registrarPaciente(FILE *f_pacientes){
 	scanf("%d",&pac.FechaDeNac.mes);
 	printf(" ->A%co: ",164);
 	scanf("%d",&pac.FechaDeNac.anio);
+	strcpy(pac.HC, "");
 	fwrite(&pac,sizeof(pac),1,f_pacientes);	
 }
 

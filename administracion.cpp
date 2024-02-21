@@ -1,10 +1,10 @@
 //Usuario: adminUTN // Contraseña: admin
 
+#include "registros.h"
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 #include<conio.h>
-#include "structs.h"
 
 Usuarios rec;
 Profesionales pro;
@@ -376,8 +376,7 @@ void modificarProfesional(FILE *archPro){
 			gets(Pro.DNI);
 			_flushall();
 			printf("\t Tel: ");
-			gets(Pro.Telefono);
-			        
+			gets(Pro.Telefono);	        
 	        fseek(archPro, -sizeof(Pro), SEEK_CUR);
 			fwrite(&Pro, sizeof(Pro), 1, archPro);
 			fclose(archPro);

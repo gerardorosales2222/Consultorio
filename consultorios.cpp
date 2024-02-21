@@ -1,8 +1,8 @@
+#include "registros.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
-#include "structs.h"
 
 FILE *f_profesionales, *f_turnos, *f_pacientes;
 bool autenticar();
@@ -156,19 +156,14 @@ void modificarHC(){
 	scanf("%d",&dni_buscado);
 	while (fread(&Pac, sizeof(Pac), 1, f_pacientes) == 1) {
 	    if (Pac.DNI == dni_buscado) {
-			printf("\t Historia Clinica: ");
-			gets(Pac.HC);
-			_flushall();       
-	        fseek(f_pacientes, -sizeof(Pac), SEEK_CUR);
-			fwrite(&Pac, sizeof(Pac), 1, f_pacientes);
-			fclose(f_pacientes);
+	    	_flushall();
+			printf("Historia Clinica: ");
+			scanf("%s",&Pac.HC);
+			long negSize = -(long)sizeof(Pac);
+			fseek(f_pacientes, negSize, SEEK_CUR);
+			fwrite(&Pac, sizeof(Pac), 1, f_pacientes);	
 	        break;
 	    }
 	}
-	
-	if (feof(f_pacientes)) {
-	    printf("El ID no se corresponde con ning%cn paciente de la lista.\n",163);
-	    fclose(f_pacientes);
-	}
-
+	fclose(f_pacientes);
 }
