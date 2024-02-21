@@ -151,7 +151,7 @@ void modificarHC(){
 	int dni_buscado;
 	Pacientes Pac;
 	listarPacientes();
-	FILE *f_pacientes = fopen("pacientes.dat","r+b");
+	FILE *f_pacientes = fopen("pacientes.dat","rb");
 	printf("\n Ingrese el DNI de paciente a atender: ");
 	scanf("%d",&dni_buscado);
 	while (fread(&Pac, sizeof(Pac), 1, f_pacientes) == 1) {
@@ -159,10 +159,10 @@ void modificarHC(){
 	    	_flushall();
 			printf("Historia Clinica: ");
 			scanf("%s",&Pac.HC);
-			long negSize = -(long)sizeof(Pac);
+			long negSize = -(long)sizeof(Pacientes);
 			fseek(f_pacientes, negSize, SEEK_CUR);
 			fwrite(&Pac, sizeof(Pac), 1, f_pacientes);	
-	        break;
+	    break;
 	    }
 	}
 	fclose(f_pacientes);
