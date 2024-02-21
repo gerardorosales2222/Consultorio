@@ -389,4 +389,5 @@ void modificarProfesional(FILE *archPro){
 	    printf("El ID no se corresponde con ning%cn m%cdico de la lista.\n",163,130);
 	    fclose(archPro);
 	}
+	
 }

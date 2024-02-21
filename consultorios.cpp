@@ -7,7 +7,8 @@
 FILE *f_profesionales, *f_turnos, *f_pacientes;
 bool autenticar();
 void listarTurnos(FILE *f_turnos, FILE *f_profesionales, FILE *f_pacientes);
-
+void modificarHC();
+	
 int main()
 { 
 	int op;
@@ -19,8 +20,7 @@ int main()
     	printf("\n\t 1.- Iniciar Sesi%cn",162);
     	printf("\n\t 2.- Visualizar Lista de Espera de Turnos (informe)");
     	printf("\n\t 3.- Registrar Historia Cl%cnica ",161);
-    	printf("\n\t 4.- ");
-    	printf("\n\t 5.- Cerrar la aplicacion\n");
+    	printf("\n\t 4.- Cerrar la aplicacion\n");
     	printf("\n\tIngrese una opci%cn: ",162);
     	scanf("%d",&op);
     	switch(op){
@@ -46,15 +46,14 @@ int main()
     			fclose(f_pacientes);
     			break;
     		case 3:
-    			
+    			system("CLS");
+    			modificarHC();
     			system("PAUSE");
     			break;
     		case 4:
-    			
-    			system("PAUSE");
 				break;
     	}
-    }while(op!=5);
+    }while(op!=4);
     return 0;
 }
 
@@ -136,4 +135,40 @@ void listarTurnos(FILE *f_turnos, FILE *f_profesionales, FILE *f_pacientes){
   	rewind(f_pacientes);
   }
   printf("\n");
+}
+
+void listarPacientes(){
+	FILE *f_pacientes = fopen("pacientes.dat","r+b");
+	Pacientes Pac;
+	printf("	Pacientes \n");
+	while(fread(&Pac, sizeof(Pac), 1, f_pacientes) == 1){
+		printf("	DNI: %d - %s \n",Pac.DNI, Pac.ApeNom);
+	}
+	fclose(f_pacientes);
+}
+
+void modificarHC(){
+	int dni_buscado;
+	Pacientes Pac;
+	listarPacientes();
+	FILE *f_pacientes = fopen("pacientes.dat","r+b");
+	printf("\n Ingrese el DNI de paciente a atender: ");
+	scanf("%d",&dni_buscado);
+	while (fread(&Pac, sizeof(Pac), 1, f_pacientes) == 1) {
+	    if (Pac.DNI == dni_buscado) {
+			printf("\t Historia Clinica: ");
+			gets(Pac.HC);
+			_flushall();       
+	        fseek(f_pacientes, -sizeof(Pac), SEEK_CUR);
+			fwrite(&Pac, sizeof(Pac), 1, f_pacientes);
+			fclose(f_pacientes);
+	        break;
+	    }
+	}
+	
+	if (feof(f_pacientes)) {
+	    printf("El ID no se corresponde con ning%cn paciente de la lista.\n",163);
+	    fclose(f_pacientes);
+	}
+
 }
