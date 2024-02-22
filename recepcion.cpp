@@ -23,7 +23,7 @@ int main(){
     Profesionales pro;
     do{
     	system("CLS");
-		printf("\n\n\n\t\t\t    M%cDULO RECEPCI%cN \n",224,224);
+			printf("\n\n\n\t\t\t    M%cDULO RECEPCI%cN \n",224,224);
 	    printf("\t\t======================================== \n\n");
     	printf("\t\t 1.- Iniciar Sesi%cn\n",162);
     	printf("\t\t 2.- Registrar Pacientes\n");
