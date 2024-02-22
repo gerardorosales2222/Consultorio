@@ -142,7 +142,7 @@ void listarPacientes(){
 	Pacientes Pac;
 	printf("	Pacientes \n");
 	while(fread(&Pac, sizeof(Pac), 1, f_pacientes) == 1){
-		printf("	DNI: %d - %s \n",Pac.DNI, Pac.ApeNom);
+		printf("	DNI: %d - %s - %s\n",Pac.DNI, Pac.ApeNom, Pac.HC);
 	}
 	fclose(f_pacientes);
 }
@@ -156,7 +156,6 @@ void modificarHC(){
 	scanf("%d",&dni_buscado);
 	while (fread(&Pac, sizeof(Pac), 1, f_pacientes) == 1) {
 	    if (Pac.DNI == dni_buscado) {
-	    	_flushall();
 			printf("Historia Clinica: ");
 			scanf("%s",&Pac.HC);
 			long negSize = -(long)sizeof(Pacientes);

@@ -12,7 +12,7 @@ FILE *f_profesionales, *f_pacientes, *f_turnos;
 bool autenticar();
 void listarMedicos();
 void listarPacientes();
-void registrarPaciente(FILE *f_pacientes);
+void registrarPaciente();
 void registrarTurno(FILE *f_pacientes);
 
 int main(){
@@ -47,9 +47,7 @@ int main(){
     		case 2:
     			system("CLS");
     			if(sesion){
-    				f_pacientes = fopen("pacientes.dat","a+b");
-    				registrarPaciente(f_pacientes);
-    				fclose(f_pacientes);
+    				registrarPaciente();
     			}else{
     				printf("\n\n\n\n\n   PRIMERO DEBE INICIAR SESION. ");
     			}
@@ -133,23 +131,20 @@ bool autenticar(){
     fclose(f_usuarios);
 }
 
-void registrarPaciente(FILE *f_pacientes){
+void registrarPaciente(){
+	f_pacientes = fopen("pacientes.dat","a+b");
 	Pacientes pac;
 	pac.baja = 0;
 	printf("\n REGISTRAR PACIENTE \n");
 	printf(" ------------------------------\n\n");
-	_flushall();
 	printf(" Apellido y Nombre: ");
-	gets(pac.ApeNom);
-	_flushall();
+	fgets(pac.ApeNom, 60, stdin);
 	printf(" DNI: ");
 	scanf("%d",&pac.DNI);
-	_flushall();
 	printf(" Tel: ");
-	gets(pac.Telefono);
+	scanf("%s",pac.Telefono);
 	printf(" Localidad: ");
-	gets(pac.Localidad);
-	_flushall();
+	scanf("%s",pac.Localidad);
 	printf(" Fecha de Nac \n ->Dia: ");
 	scanf("%d",&pac.FechaDeNac.dia);	
 	printf(" ->Mes: ");
@@ -157,7 +152,8 @@ void registrarPaciente(FILE *f_pacientes){
 	printf(" ->A%co: ",164);
 	scanf("%d",&pac.FechaDeNac.anio);
 	strcpy(pac.HC, "");
-	fwrite(&pac,sizeof(pac),1,f_pacientes);	
+	fwrite(&pac,sizeof(pac),1,f_pacientes);
+	fclose(f_pacientes);
 }
 
 void listarMedicos(){
