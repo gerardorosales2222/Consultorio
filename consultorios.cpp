@@ -151,7 +151,7 @@ void modificarHC(){
 	int dni_buscado;
 	Pacientes Pac;
 	listarPacientes();
-	FILE *f_pacientes = fopen("pacientes.dat","rb");
+	FILE *f_pacientes = fopen("pacientes.dat","r+b");
 	printf("\n Ingrese el DNI de paciente a atender: ");
 	scanf("%d",&dni_buscado);
 	while (fread(&Pac, sizeof(Pac), 1, f_pacientes) == 1) {

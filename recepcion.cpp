@@ -23,7 +23,7 @@ int main(){
     Profesionales pro;
     do{
     	system("CLS");
-			printf("\n\n\n\t\t\t    M%cDULO RECEPCI%cN \n",224,224);
+		printf("\n\n\n\t\t\t    M%cDULO RECEPCI%cN \n",224,224);
 	    printf("\t\t======================================== \n\n");
     	printf("\t\t 1.- Iniciar Sesi%cn\n",162);
     	printf("\t\t 2.- Registrar Pacientes\n");
@@ -137,14 +137,18 @@ void registrarPaciente(){
 	pac.baja = 0;
 	printf("\n REGISTRAR PACIENTE \n");
 	printf(" ------------------------------\n\n");
+	_flushall();
 	printf(" Apellido y Nombre: ");
 	fgets(pac.ApeNom, 60, stdin);
+	_flushall();
 	printf(" DNI: ");
 	scanf("%d",&pac.DNI);
+	_flushall();
 	printf(" Tel: ");
-	scanf("%s",pac.Telefono);
+	fgets(pac.Telefono, 60, stdin);
+	_flushall();
 	printf(" Localidad: ");
-	scanf("%s",pac.Localidad);
+	fgets(pac.Localidad, 60, stdin);
 	printf(" Fecha de Nac \n ->Dia: ");
 	scanf("%d",&pac.FechaDeNac.dia);	
 	printf(" ->Mes: ");
@@ -152,7 +156,7 @@ void registrarPaciente(){
 	printf(" ->A%co: ",164);
 	scanf("%d",&pac.FechaDeNac.anio);
 	strcpy(pac.HC, "");
-	fwrite(&pac,sizeof(pac),1,f_pacientes);
+	fwrite(&pac,sizeof(Pacientes),1,f_pacientes);
 	fclose(f_pacientes);
 }
 

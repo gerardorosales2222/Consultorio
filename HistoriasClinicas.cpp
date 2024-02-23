@@ -24,10 +24,11 @@ int main(){
 }
 
 void listarPacientes(){
-	FILE *f_pac = fopen("pacientes.dat","r+b");
-	Pacientes pac;
-	while(fread(&pac,sizeof(Pacientes),1,f_pac) == 1){
-		printf("%s - %s", pac.ApeNom, pac.Localidad);
+	FILE *f_pacientes = fopen("pacientes.dat","r+b");
+	Pacientes Pac;
+	printf("	Pacientes \n");
+	while(fread(&Pac, sizeof(Pac), 1, f_pacientes) == 1){
+		printf("	DNI: %d - %s - %s\n",Pac.DNI, Pac.ApeNom, Pac.HC);
 	}
-	fclose(f_pac);
+	fclose(f_pacientes);
 }
