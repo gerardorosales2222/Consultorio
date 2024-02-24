@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
-#include "registros.h"
+#include "structs.h"
 
 void listarTurnos(FILE *f_turnos, FILE *f_profesionales, FILE *f_pacientes);
 FILE *f_profesionales, *f_pacientes, *f_turnos;

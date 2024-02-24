@@ -1,10 +1,10 @@
 //Usuario: adminUTN // Contraseña: admin
 
-#include "registros.h"
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 #include<conio.h>
+#include "structs.h"
 
 Usuarios rec;
 Profesionales pro;

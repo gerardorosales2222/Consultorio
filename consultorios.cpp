@@ -1,8 +1,8 @@
-#include "registros.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
+#include "structs.h"
 
 FILE *f_profesionales, *f_turnos, *f_pacientes;
 bool autenticar();
@@ -152,12 +152,13 @@ void modificarHC(){
 	Pacientes Pac;
 	listarPacientes();
 	FILE *f_pacientes = fopen("pacientes.dat","r+b");
-	printf("\n Ingrese el DNI de paciente a atender: ");
+	printf("\nIngrese el DNI de paciente a atender: ");
 	scanf("%d",&dni_buscado);
 	while (fread(&Pac, sizeof(Pac), 1, f_pacientes) == 1) {
 	    if (Pac.DNI == dni_buscado) {
-			printf("Historia Clinica: ");
-			scanf("%s",&Pac.HC);
+	    	_flushall();
+			printf("Actualización de Historia Clinica: ");
+			gets(Pac.HC);
 			long negSize = -(long)sizeof(Pacientes);
 			fseek(f_pacientes, negSize, SEEK_CUR);
 			fwrite(&Pac, sizeof(Pac), 1, f_pacientes);	

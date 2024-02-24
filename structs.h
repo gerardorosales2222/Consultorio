@@ -20,13 +20,18 @@ typedef struct{
 }Fecha;
 
 typedef struct{
+	int id;
+	char HC[200];
+}HistoriaClinica;
+
+typedef struct{
 	char ApeNom[60];
 	int DNI;
 	char Telefono[10];
 	Fecha FechaDeNac;
 	char Localidad[60];
 	int baja;
-	char HC[380];
+	char HC[100];
 }Pacientes;
 
 typedef struct{
