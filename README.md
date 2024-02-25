@@ -197,12 +197,3 @@ Fecha (_Fecha_)
 DniPaciente (_int_)
 
 Detalle de Atención (_char [380]_)
-
-
- 
-
-## III. ADICIONALES
-
-Deberá implementar las operaciones de Archivo Binario Alta, Baja (Lógica)  y Modificación utilizando:
-Una Estructura de datos dinámica del tipo PILA con el Archivo Usuarios.dat, como lista enlazada donde cada nodo contiene un registro y un puntero al siguiente nodo.
-Una Estructura de datos Jerárquica no lineal del tipo Árbol Binario con el Archivo Profesionales.dat.
