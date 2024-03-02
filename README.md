@@ -3,9 +3,6 @@
 Ejercicio integrador de habilidades de C++
 + Registros
 + Archivos
-+ Listas enlazadas
-+ Pilas 
-+ Árbol binario.
 
 Desarrollaremos una aplicación que permita registrar las atenciones de personas las cuales denominaremos pacientes, las mismas asisten a un centro médico el cual se encuentra estructurado en varios consultorios donde los profesionales de la salud de las  distintas especialidades prestan servicio de consulta y atención médica. Además, deberá contar también de un módulo para la gestión de turnos y otro para la administración.
 
